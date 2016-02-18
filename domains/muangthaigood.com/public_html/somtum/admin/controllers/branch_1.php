@@ -19,47 +19,25 @@ if ($_POST['submit_bt'] == 'บันทึกข้อมูล' || $_POST['sub
         $redirect = false;
     }
 
-    if ($_POST["post_action"] == "add") {
-        if ($_FILES["file_array_shop"]["name"][0] == "") {
-
+    if ($_FILES["file_array_shop"]["name"][0] == "") {
+        if ($_POST['image_shop'] == '') {
             SetAlert('กรุณาอัพโหลดภาพป้ายร้าน');
-            header('location:' . ADDRESS_ADMIN_CONTROL . 'branch&action=add');
-            die();
-        }
-        if ($_FILES["file_array_thai"]["name"][0] == "") {
-
-            SetAlert('กรุณาอัพโหลดภาพแผนที่ (Thai)');
-             header('location:' . ADDRESS_ADMIN_CONTROL . 'branch&action=add');
-            die();
-        }
-        if ($_FILES["file_array_eng"]["name"][0] == "") {
-
-            SetAlert('กรุณาอัพโหลดภาพแผนที่ (English)');
-            header('location:' . ADDRESS_ADMIN_CONTROL . 'branch&action=add');
+            header('location:' . ADDRESS_ADMIN_CONTROL . 'branch&action=edit&id='.$_POST['id']);
             die();
         }
     }
-    if ($_POST["post_action"] == "edit") {
-        if ($_FILES["file_array_shop"]["name"][0] == "") {
-            if ($_POST['image_shop'] == '') {
-                SetAlert('กรุณาอัพโหลดภาพป้ายร้าน');
-                header('location:' . ADDRESS_ADMIN_CONTROL . 'branch&action=edit&id=' . $_POST['id']);
-                die();
-            }
+    if ($_FILES["file_array_thai"]["name"][0] == "" ) {
+        if ($_POST['image_map_thai'] == '' ) {
+            SetAlert('กรุณาอัพโหลดภาพแผนที่ (Thai)');
+            header('location:' . ADDRESS_ADMIN_CONTROL . 'branch&action=edit&id='.$_POST['id']);
+            die();
         }
-        if ($_FILES["file_array_thai"]["name"][0] == "") {
-            if ($_POST['image_map_thai'] == '') {
-                SetAlert('กรุณาอัพโหลดภาพแผนที่ (Thai)');
-                header('location:' . ADDRESS_ADMIN_CONTROL . 'branch&action=edit&id=' . $_POST['id']);
-                die();
-            }
-        }
-        if ($_FILES["file_array_eng"]["name"][0] == "") {
-            if ($_POST['image_map_eng'] == '') {
-                SetAlert('กรุณาอัพโหลดภาพแผนที่ (English)');
-                header('location:' . ADDRESS_ADMIN_CONTROL . 'branch&action=edit&id=' . $_POST['id']);
-                die();
-            }
+    }
+     if ($_FILES["file_array_eng"]["name"][0] == "") {
+        if ( $_POST['image_map_eng'] == '') {
+            SetAlert('กรุณาอัพโหลดภาพแผนที่ (English)');
+            header('location:' . ADDRESS_ADMIN_CONTROL . 'branch&action=edit&id='.$_POST['id']);
+            die();
         }
     }
 
@@ -359,27 +337,26 @@ if ($_GET['id'] != '' && $_GET['action'] == 'edit') {
 <?php if ($_GET['action'] == "add" || $_GET['action'] == "edit") { ?>
     <div class="row-fluid">
         <div class="span12">
-    <?php
-    // Report errors to the user
+            <?php
+            // Report errors to the user
 
 
-    Alert(GetAlert('error'));
+            Alert(GetAlert('error'));
 
 
-    Alert(GetAlert('success'), 'success');
-    ?>
+            Alert(GetAlert('success'), 'success');
+            ?>
             <div class="da-panel collapsible">
                 <div class="da-panel-header"> <span class="da-panel-title"> <i class="icol-<?php echo ($branch->GetPrimary() != '') ? 'application-edit' : 'add' ?>"></i> <?php echo ($branch->GetPrimary() != '') ? 'แก้ไข' : 'เพิ่ม' ?> สาขา </span> </div>
                 <div class="da-panel-content da-form-container">
                     <form id="validate" enctype="multipart/form-data" action="<?php echo ADDRESS_ADMIN_CONTROL ?>branch<?php echo ($branch->GetPrimary() != '') ? '&id=' . $branch->GetPrimary() : ''; ?>" method="post" class="da-form">
-    <?php if ($branch->GetPrimary() != ''): ?>
+                        <?php if ($branch->GetPrimary() != ''): ?>
                             <input type="hidden" name="id" value="<?php echo $branch->GetPrimary() ?>" />
                             <input type="hidden" name="created_at" value="<?php echo $branch->GetValue('created_at') ?>" />
                             <input type="hidden" name="image_shop" value="<?php echo $branch->GetValue('image_shop') ?>" />
                             <input type="hidden" name="image_map_thai" value="<?php echo $branch->GetValue('image_map_thai') ?>" />
                             <input type="hidden" name="image_map_eng" value="<?php echo $branch->GetValue('image_map_eng') ?>" />
-    <?php endif; ?>
-                        <input type="hidden" name="post_action" value="<?php echo $_GET['action'] ?>" />
+                        <?php endif; ?>
                         <div class="da-form-inline">
                             <div class="da-form-row">
                                 <label class="da-form-label">ชื่อสาขา (Thai)<span class="required">*</span></label>
@@ -415,7 +392,7 @@ if ($_GET['id'] != '' && $_GET['action'] == 'edit') {
                                             <ul>
                                                 <li> 
                                                     <span class="">
-    <?php if ($branch->GetPrimary() != '') { ?>
+                                                        <?php if ($branch->GetPrimary() != '') { ?>
                                                             <img src="<?php echo ADDRESS_SLIDES . $branch->getDataDesc("image_shop", "id = " . $branch->GetPrimary()) ?>" alt="<?php echo $branch->GetValue('alt_shop') ?>" style="max-width: 100%;" class="img-polaroid"> 
                                                         <?php } ?>
                                                     </span> 
@@ -444,7 +421,7 @@ if ($_GET['id'] != '' && $_GET['action'] == 'edit') {
                                             <ul>
                                                 <li> 
                                                     <span class="">
-    <?php if ($branch->GetPrimary() != '') { ?>
+                                                        <?php if ($branch->GetPrimary() != '') { ?>
                                                             <img src="<?php echo ADDRESS_SLIDES . $branch->getDataDesc("image_map_thai", "id = " . $branch->GetPrimary()) ?>" alt="<?php echo $branch->GetValue('alt_thai') ?>" style="max-width: 100%;" class="img-polaroid"> 
                                                         <?php } ?>
                                                     </span> 
@@ -473,7 +450,7 @@ if ($_GET['id'] != '' && $_GET['action'] == 'edit') {
                                             <ul>
                                                 <li> 
                                                     <span class="">
-    <?php if ($branch->GetPrimary() != '') { ?>
+                                                        <?php if ($branch->GetPrimary() != '') { ?>
                                                             <img src="<?php echo ADDRESS_SLIDES . $branch->getDataDesc("image_map_eng", "id = " . $branch->GetPrimary()) ?>" alt="<?php echo $branch->GetValue('alt_eng') ?>" style="max-width: 100%;" class="img-polaroid"> 
                                                         <?php } ?>
                                                     </span> 
@@ -506,22 +483,22 @@ if ($_GET['id'] != '' && $_GET['action'] == 'edit') {
                                 <label class="da-form-label">สถานะ <span class="required">*</span></label>
                                 <div class="da-form-item large">
                                     <ul class="da-form-list">
-    <?php
-    $getStatus = $branch->get_enum_values('status');
+                                        <?php
+                                        $getStatus = $branch->get_enum_values('status');
 
 
-    $i = 1;
+                                        $i = 1;
 
-    foreach ($getStatus as $status) {
-        ?>
+                                        foreach ($getStatus as $status) {
+                                            ?>
                                             <li>
                                                 <input type="radio" name="status" id="status" value="<?php echo $status ?>" <?php echo ($branch->GetPrimary() != "") ? ($branch->GetValue('status') == $status) ? "checked=\"checked\"" : "" : ($i == 1) ? "checked=\"checked\"" : "" ?> class="required"/>
                                                 <label><?php echo $status ?></label>
                                             </li>
-        <?php
-        $i++;
-    }
-    ?>
+                                            <?php
+                                            $i++;
+                                        }
+                                        ?>
                                     </ul>
                                 </div>
                             </div>
@@ -539,15 +516,15 @@ if ($_GET['id'] != '' && $_GET['action'] == 'edit') {
 <?php } else { ?>
     <div class="row-fluid">
         <div class="span12">
-    <?php
-    // Report errors to the user
+            <?php
+            // Report errors to the user
 
 
-    Alert(GetAlert('error'));
+            Alert(GetAlert('error'));
 
 
-    Alert(GetAlert('success'), 'success');
-    ?>
+            Alert(GetAlert('success'), 'success');
+            ?>
             <div class="da-panel collapsible">
                 <div class="da-panel-header"> <span class="da-panel-title"> <i class="icol-grid"></i> สาขา ทั้งหมด </span> </div>
                 <div class="da-panel-toolbar">
@@ -569,15 +546,15 @@ if ($_GET['id'] != '' && $_GET['action'] == 'edit') {
                             </tr>
                         </thead>
                         <tbody>
-    <?php
-    $sql = "SELECT * FROM " . $branch->getTbl() . " ORDER BY sort ASC";
+                            <?php
+                            $sql = "SELECT * FROM " . $branch->getTbl() . " ORDER BY sort ASC";
 
 
-    $query = $db->Query($sql);
+                            $query = $db->Query($sql);
 
 
-    while ($row = $db->FetchArray($query)) {
-        ?>
+                            while ($row = $db->FetchArray($query)) {
+                                ?>
                                 <tr>
                                     <td class="center" width="15"><?php echo $row['id']; ?></td>
                                     <td  width=""><?php echo $row['name']; ?></td>
@@ -589,7 +566,7 @@ if ($_GET['id'] != '' && $_GET['action'] == 'edit') {
                                                         document.location.href = '<?php echo ADDRESS_ADMIN_CONTROL ?>branch&action=del&id=<?php echo $row['id'] ?>'
                                                                 }" class="btn btn-danger btn-small">ลบ</a></td>
                                 </tr>
-                                    <?php } ?>
+                            <?php } ?>
                         </tbody>
                     </table>
                 </div>

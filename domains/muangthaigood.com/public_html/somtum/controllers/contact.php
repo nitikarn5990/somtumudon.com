@@ -107,7 +107,7 @@ if ($_POST ["submit_bt"] == 'Send') {
             <p> Enter Code
                 <input type="text" name="capt" id="capt" required=""/>
                 <span><img src="image_capt.php" id="mycapt"  align="absmiddle" />&nbsp;&nbsp;<i id="changeCpt" class="fa fa-refresh" style="vertical-align: middle;cursor: pointer;"></i></span>
-                <img class="hidden" id="" src="https://www.e-cnhsp.sp.gov.br/GFR/imagens/refresh.png" > </p>
+                <img class="" id="" src="<?=ADDRESS?>images/refresh-button.png" > </p>
             
             <p>
                 <input id="submit" name="submit_bt" style="width:80px; height:30px;" type="submit" value="Send" />

@@ -135,10 +135,17 @@ if ($_GET['id'] != '' && $_GET['action'] == 'edit') {
                             <fieldset class="da-form-inline">
                                 <legend> ข้อมูลติดต่อ</legend>
                                 <div class="da-form-row">
-                                    <label class="da-form-label">รายละเอียด<span class="required">*</span></label>
+                                    <label class="da-form-label">รายละเอียด (Thai)<span class="required">*</span></label>
                                     <div class="da-form-item large">
                                         <textarea name="contact_detail" id="contact_detail" class="span12 tinymce required"><?php echo ($contact->GetPrimary() != '') ? $contact->GetValue('contact_detail') : ''; ?></textarea>
                                         <label for="contact_detail" generated="true" class="error" style="display:none;"></label>
+                                    </div>
+                                </div>
+                                  <div class="da-form-row">
+                                    <label class="da-form-label">รายละเอียด (English)<span class="required">*</span></label>
+                                    <div class="da-form-item large">
+                                        <textarea name="contact_detail_eng" id="contact_detail_eng" class="span12 tinymce required"><?php echo ($contact->GetPrimary() != '') ? $contact->GetValue('contact_detail_eng') : ''; ?></textarea>
+                                        <label for="contact_detail_eng" generated="true" class="error" style="display:none;"></label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -158,7 +165,16 @@ if ($_GET['id'] != '' && $_GET['action'] == 'edit') {
                                     </div>
                                 </div>
                             </fieldset>    
-
+                             <fieldset class="da-form-inline">
+                                 <legend><i class="fa fa-facebook-square"></i> Script Facebook</legend>
+                                <div class="da-form-row">
+                                    <label class="da-form-label">Script Facebook Code <span class="required">*</span></label>
+                                    <div class="da-form-item large">
+                                        <textarea name="script_fb" id="script_fb" style="height: 300px;" class="span12"><?php echo ($contact->GetPrimary() != '') ? $contact->GetValue('script_fb') : ''; ?></textarea>
+                                        <label class="help-block hidden" style="color: red;"></label>
+                                    </div>
+                                </div>
+                             </fieldset>
 
 
                             <div class="btn-row">

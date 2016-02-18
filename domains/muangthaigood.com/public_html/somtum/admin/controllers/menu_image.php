@@ -1,58 +1,71 @@
 <?php
 // If they are saving the Information	
 
+
+
+
+
 if ($_POST['submit_bt'] == 'บันทึกข้อมูล' || $_POST['submit_bt'] == 'บันทึกข้อมูล และแก้ไขต่อ') {
+
 
     if ($_POST['submit_bt'] == 'บันทึกข้อมูล') {
 
 
         $redirect = true;
     } else {
+
+
         $redirect = false;
     }
 
-//    if ($_POST["post_action"] == "add") {
-//        if ($_FILES["file_array"]["name"][0] == "") {
-//
-//            SetAlert('กรุณาอัพโหลดภาพสินค้า');
-//            header('location:' . ADDRESS_ADMIN_CONTROL . 'menu&action=add');
-//            die();
-//        }
-//    }
-//    if ($_POST["post_action"] == "edit") {
-//        if ($_FILES["file_array"]["name"][0] == "") {
-//            if ($_POST['image'] == '') {
-//                SetAlert('กรุณาอัพโหลดภาพสินค้า');
-//                header('location:' . ADDRESS_ADMIN_CONTROL . 'menu&action=edit&id=' . $_POST['id']);
-//                die();
-//            }
-//        }
-//    }
+
+    if ($_POST["post_action"] == "add") {
+        if ($_FILES["file_array"]["name"][0] == "") {
+
+            SetAlert('กรุณาอัพโหลดภาพ');
+            header('location:' . ADDRESS_ADMIN_CONTROL . 'menu_image&action=add');
+            die();
+        }
+    }
+    if ($_POST["post_action"] == "edit") {
+        if ($_FILES["file_array"]["name"][0] == "") {
+            if ($_POST['image'] == '') {
+                SetAlert('กรุณาอัพโหลดภาพ');
+                header('location:' . ADDRESS_ADMIN_CONTROL . 'menu_image&action=edit&id=' . $_POST['id']);
+                die();
+            }
+        }
+    }
 
     $arrData = array();
 
 
     $arrData = $functions->replaceQuote($_POST);
 
-    if ($arrData['ref'] != "") {
 
-        $arrData['name_ref'] = $functions->seoTitle($arrData['ref']);
+    $menu_image->SetValues($arrData);
+
+
+
+    if ($menu_image->GetPrimary() == '') {
+
+
+        $menu_image->SetValue('created_at', DATE_TIME);
+
+
+        $menu_image->SetValue('updated_at', DATE_TIME);
     } else {
 
-        $arrData['name_ref'] = $functions->seoTitle($arrData['name']);
+
+        $menu_image->SetValue('updated_at', DATE_TIME);
     }
 
-    $menu->SetValues($arrData);
 
-    if ($menu->GetPrimary() == '') {
-        $menu->SetValue('created_at', DATE_TIME);
-        $menu->SetValue('updated_at', DATE_TIME);
-    } else {
-        $menu->SetValue('updated_at', DATE_TIME);
-    }
+    if ($menu_image->Save()) {
 
-    if ($menu->Save()) {
-        SetAlert('เพิ่ม แก้ไข ข้อมูลสำเร็จ', 'success');
+
+        //  SetAlert('เพิ่ม แก้ไข ข้อมูลสำเร็จ', 'success');
+
         if (isset($_FILES['file_array'])) {
 
             $Allfile = "";
@@ -86,25 +99,25 @@ if ($_POST['submit_bt'] == 'บันทึกข้อมูล' || $_POST['sub
 
 
                     chdir($cdir); // Restore the old working directory   
-                    //$menu->SetValue('slides_file_name', $newImage);
-                    //  $menu->SetValue('file_name', $newImage);
-                    // $menu->SetValue('alt', $_POST['alt']);
+                    //$menu_image->SetValue('slides_file_name', $newImage);
+                    //  $menu_image->SetValue('file_name', $newImage);
+                    // $menu_image->SetValue('alt', $_POST['alt']);
                     $arrData = array(
                         'image' => $newImage
                     );
                     $arrKey = array(
-                        'id' => $menu->GetValue('id')
+                        'id' => $menu_image->GetValue('id')
                     );
 
-                    // $menu->SetValue('slides_id', $menu->GetPrimary());
+                    // $menu_image->SetValue('slides_id', $menu_image->GetPrimary());
                     //$product_files->Save();
 
 
-                    if ($menu->updateSQL($arrData, $arrKey)) {
+                    if ($menu_image->updateSQL($arrData, $arrKey)) {
 
                         SetAlert('เพิ่ม แก้ไข ข้อมูลสำเร็จ', 'success');
 
-                        //	$menu->ResetValues();
+                        //	$menu_image->ResetValues();
                     } else {
 
 
@@ -113,16 +126,31 @@ if ($_POST['submit_bt'] == 'บันทึกข้อมูล' || $_POST['sub
                 }
             }
         }
+
         ////////
 
+
+
+
+
         if ($redirect) {
-            header('location:' . ADDRESS_ADMIN_CONTROL . 'menu');
+
+
+            header('location:' . ADDRESS_ADMIN_CONTROL . 'menu_image&type=' . $menu_image->GetValue('name'));
+
+
             die();
         } else {
-            header('location:' . ADDRESS_ADMIN_CONTROL . 'menu&action=edit&id=' . $menu->GetPrimary());
+
+
+            header('location:' . ADDRESS_ADMIN_CONTROL . 'menu_image&action=edit&id=' . $menu_image->GetPrimary());
+
+
             die();
         }
     } else {
+
+
         SetAlert('ไม่สามารถเพิ่ม แก้ไข ข้อมูลได้ กรุณาลองใหม่อีกครั้ง');
     }
 }
@@ -139,22 +167,22 @@ if ($_GET['id'] != '' && $_GET['action'] == 'del') {
     $arrDel = array('id' => $_GET['id']);
 
 
-    $menu->SetValues($arrDel);
+    $menu_image->SetValues($arrDel);
 
     // Remove the info from the DB
 
 
-    if ($menu->Delete()) {
+    if ($menu_image->Delete()) {
 
-        if (unlink(DIR_ROOT_SLIDES . $menu->GetValue('image'))) {
+        if (unlink(DIR_ROOT_SLIDES . $menu_image->GetValue('image'))) {
             // Set alert and redirect
             SetAlert('Delete Data Success', 'success');
-            header('location:' . ADDRESS_ADMIN_CONTROL . 'menu');
+            header('location:' . ADDRESS_ADMIN_CONTROL . 'menu_image');
         }
 
         // Set alert and redirect
         SetAlert('Delete Data Success', 'success');
-        header('location:' . ADDRESS_ADMIN_CONTROL . 'menu');
+        header('location:' . ADDRESS_ADMIN_CONTROL . 'menu_image');
 
         die();
     } else {
@@ -164,111 +192,95 @@ if ($_GET['id'] != '' && $_GET['action'] == 'del') {
     }
 }
 
+
+
+
+
 if ($_GET['id'] != '' && $_GET['action'] == 'edit') {
 
 
     // For Update
 
 
-    $menu->SetPrimary((int) $_GET['id']);
+    $menu_image->SetPrimary((int) $_GET['id']);
 
 
     // Try to get the information
 
 
-    if (!$menu->GetInfo()) {
+    if (!$menu_image->GetInfo()) {
 
 
         SetAlert('ไม่สามารถค้นหาข้อมูลได้ กรุณาลองใหม่อีกครั้ง');
 
 
-        $menu->ResetValues();
+        $menu_image->ResetValues();
     }
 }
 ?>
-<?php if ($_GET['action'] == "add" || $_GET['action'] == "edit") { ?>
+<?php
+if ($_GET['action'] == "add" || $_GET['action'] == "edit") {
+    ?>
     <div class="row-fluid">
         <div class="span12">
-            <?php
-            // Report errors to the user
 
-
-            Alert(GetAlert('error'));
-
-
-            Alert(GetAlert('success'), 'success');
-            ?>
             <div class="da-panel collapsible">
-                <div class="da-panel-header"> <span class="da-panel-title"> <i class="icol-<?php echo ($menu->GetPrimary() != '') ? 'application-edit' : 'add' ?>"></i> <?php echo ($menu->GetPrimary() != '') ? 'แก้ไข' : 'เพิ่ม' ?> รายการอาหร </span> </div>
+                <div class="da-panel-header"> <span class="da-panel-title"> <i class="icol-<?php echo ($menu_image->GetPrimary() != '') ? 'application-edit' : 'add' ?>"></i> <?php echo ($menu_image->GetPrimary() != '') ? 'แก้ไข' : 'เพิ่ม' ?> ภาพ เมนู/ราคา <?= $txt_type ?></span> </div>
                 <div class="da-panel-content da-form-container">
-                    <form id="validate" enctype="multipart/form-data" action="<?php echo ADDRESS_ADMIN_CONTROL ?>menu<?php echo ($menu->GetPrimary() != '') ? '&id=' . $menu->GetPrimary() : ''; ?>" method="post" class="da-form">
-                        <?php if ($menu->GetPrimary() != ''): ?>
-                            <input type="hidden" name="id" value="<?php echo $menu->GetPrimary() ?>" />
-                            <input type="hidden" name="created_at" value="<?php echo $menu->GetValue('created_at') ?>" />
-                            <input type="hidden" name="image" value="<?php echo $menu->GetValue('image') ?>" />
+                    <form id="validate" enctype="multipart/form-data" action="<?php echo ADDRESS_ADMIN_CONTROL ?>menu_image<?php echo ($menu_image->GetPrimary() != '') ? '&id=' . $menu_image->GetPrimary() : ''; ?>" method="post" class="da-form">
+                        <?php if ($menu_image->GetPrimary() != ''): ?>
+                            <input type="hidden" name="id" value="<?php echo $menu_image->GetPrimary() ?>" />
+                            <input type="hidden" name="created_at" value="<?php echo $menu_image->GetValue('created_at') ?>" />
+                            <input type="hidden" name="image" value="<?php echo $menu_image->GetValue('image') ?>" />
+
                         <?php endif; ?>
                         <input type="hidden" name="post_action" value="<?php echo $_GET['action'] ?>" />
                         <div class="da-form-inline">
 
                             <div class="da-form-row">
-                                <label class="da-form-label">ชื่อสินค้า (Thai)<span class="required"> *</span></label>
-                                <div class="da-form-item large">
-                                    <input type="text" name="name" id="name" value="<?php echo ($menu->GetPrimary() != '') ? $menu->GetValue('name') : ''; ?>" class="span12 required" />
-                                </div>
-                                <p>&nbsp;</p>
-                                 <label class="da-form-label">ชื่อสินค้า (English)<span class="required"> *</span></label>
-                                <div class="da-form-item large">
-                                    <input type="text" name="name_eng" id="name" value="<?php echo ($menu->GetPrimary() != '') ? $menu->GetValue('name_eng') : ''; ?>" class="span12 required" />
-                                </div>
-                            </div>
-                            <div class="da-form-row">
-                                <label class="da-form-label">หมวดหมู่ <span class="required">*</span></label>
-                                <div class="da-form-item large">
-                                    <select id="category_id" name="category_id" class="span12 select2 required">
-                                        <option value=""></option>
-                                        <?php $category->CreateDataList("id", "category_name", "status='ใช้งาน'", ($menu->GetPrimary() != "") ? $menu->GetValue('category_id') : "") ?>
-                                    </select>
-                                </div>
-                            </div>
-                          
-                            <div class="da-form-row">
-                                <label class="da-form-label">ราคา<span class="required">*</span></label>
-                                <div class="da-form-item large">
-                                    <input type="number" name="price" id="price" value="<?php echo ($menu->GetPrimary() != '') ? $menu->GetValue('price') : ''; ?>" class="span12 required" />
-                                </div>
-                            </div>
-
-                            
-
-                            <div class="da-form-row hidden">
                                 <label class="da-form-label">ไฟล์ที่อัพโหลด</label>
                                 <div class="da-form-item large">
                                     <ul style=" list-style-type: none;" class="da-form-list">
                                         <ul>
                                             <li> 
                                                 <span class="">
-                                                    <?php if ($menu->GetPrimary() != '') { ?>
-                                                        <img src="<?php echo ADDRESS_SLIDES . $menu->getDataDesc("image", "id = " . $menu->GetPrimary()) ?>" alt="<?php echo $menu->GetValue('alt') ?>" style="max-width: 100%;" class="img-polaroid"> 
+                                                    <?php if ($menu_image->GetPrimary() != '') { ?>
+                                                        <img src="<?php echo ADDRESS_SLIDES . $menu_image->getDataDesc("image", "id = " . $menu_image->GetPrimary()) ?>" alt="<?php echo $menu_image->GetValue('alt') ?>" style="max-width: 100%;" class="img-polaroid"> 
                                                     <?php } ?>
                                                 </span> 
                                             </li>
                                         </ul>
                                 </div>
                             </div>
-                            <div class="da-form-row hidden">
-                                <label class="da-form-label">อัพโหลดไฟล์ <span class="required">*</span></label>
-                                <div class="da-form-item large" id="filecopy"> <span class="formNote"><strong>Alt tag</strong> </span>
-                                    <input type="text" placeholder="" name="alt" value="<?php echo $menu->GetValue('alt') ?>" >
+                            <div class="da-form-row">
+                                <label class="da-form-label">อัพโหลดไฟล์ <span class="required"> *</span></label>
+                                <div class="da-form-item large" id="filecopy"> <span class="formNote"><strong>Alt tag &nbsp;</strong> </span>
+                                    <input type="text" placeholder="" name="alt" value="<?php echo $menu_image->GetValue('alt') ?>" >
                                     <input type="file" name="file_array[]" id="image"  class="span4"/>
 
-                                    <label class="da-form-label"> </label>
+                                    <label class="da-form-label"> <span class="required"></span></label>
 
+                                </div>
+                            </div>
+
+                            <div class="da-form-row">
+                                <label class="da-form-label">รายละเอียดภาพ (Thai)<span class="required"> *</span></label>
+                                <div class="da-form-item large">
+                                    <textarea name="detail" id="detail" class="span12 tinymce required"><?php echo ($menu_image->GetPrimary() != '') ? $menu_image->GetValue('detail') : ''; ?></textarea>
+                                    <label for="detail" generated="true" class="error" style="display:none;"></label>
+                                </div>
+                            </div>
+                            <div class="da-form-row">
+                                <label class="da-form-label">รายละเอียดภาพ (English)<span class="required"> *</span></label>
+                                <div class="da-form-item large">
+                                    <textarea name="detail_eng" id="detail_eng" class="span12 tinymce required"><?php echo ($menu_image->GetPrimary() != '') ? $menu_image->GetValue('detail_eng') : ''; ?></textarea>
+                                    <label for="detail_eng" generated="true" class="error" style="display:none;"></label>
                                 </div>
                             </div>
                             <div class="da-form-row">
                                 <label class="da-form-label">จัดลำดับ <span class="required">*</span></label>
                                 <div class="da-form-item large">
-                                    <input type="number" name="sort" id="sort" value="<?php echo ($menu->GetPrimary() != '') ? $menu->GetValue('sort') : '0'; ?>" class="span12" />
+                                    <input type="number" name="sort" id="sort" value="<?php echo ($menu_image->GetPrimary() != '') ? $menu_image->GetValue('sort') : '0'; ?>" class="span12" />
                                 </div>
                             </div>
                             <div class="da-form-row">
@@ -276,7 +288,7 @@ if ($_GET['id'] != '' && $_GET['action'] == 'edit') {
                                 <div class="da-form-item large">
                                     <ul class="da-form-list">
                                         <?php
-                                        $getStatus = $menu->get_enum_values('status');
+                                        $getStatus = $menu_image->get_enum_values('status');
 
 
                                         $i = 1;
@@ -284,7 +296,7 @@ if ($_GET['id'] != '' && $_GET['action'] == 'edit') {
                                         foreach ($getStatus as $status) {
                                             ?>
                                             <li>
-                                                <input type="radio" name="status" id="status" value="<?php echo $status ?>" <?php echo ($menu->GetPrimary() != "") ? ($menu->GetValue('status') == $status) ? "checked=\"checked\"" : "" : ($i == 1) ? "checked=\"checked\"" : "" ?> class="required"/>
+                                                <input type="radio" name="status" id="status" value="<?php echo $status ?>" <?php echo ($menu_image->GetPrimary() != "") ? ($menu_image->GetValue('status') == $status) ? "checked=\"checked\"" : "" : ($i == 1) ? "checked=\"checked\"" : "" ?> class="required"/>
                                                 <label><?php echo $status ?></label>
                                             </li>
                                             <?php
@@ -294,18 +306,34 @@ if ($_GET['id'] != '' && $_GET['action'] == 'edit') {
                                     </ul>
                                 </div>
                             </div>
-
                         </div>
                         <div class="btn-row">
-                            <input type="submit" name="submit_bt" value="บันทึกข้อมูล" class="btn btn-success" />
+
                             <input type="submit" name="submit_bt" value="บันทึกข้อมูล และแก้ไขต่อ" class="btn btn-primary" />
-                            <a href="<?php echo ADDRESS_ADMIN_CONTROL ?>menu" class="btn btn-danger">ยกเลิก</a> </div>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-<?php } else { ?>
+    <?php
+} else {
+    if ($_GET['type'] == 'index') {
+        $txt_type = '';
+    }
+    if ($_GET['type'] == 'model') {
+        $txt_type = 'แบบบ้าน';
+    }
+    if ($_GET['type'] == 'chart-project') {
+        $txt_type = 'ผังโครงการ';
+    }
+    if ($_GET['type'] == 'location') {
+        $txt_type = 'ที่ตั้งโครงการ';
+    }
+    if ($_GET['type'] == 'contact') {
+        $txt_type = 'ติดต่อเรา';
+    }
+    ?>
     <div class="row-fluid">
         <div class="span12">
             <?php
@@ -318,21 +346,18 @@ if ($_GET['id'] != '' && $_GET['action'] == 'edit') {
             Alert(GetAlert('success'), 'success');
             ?>
             <div class="da-panel collapsible">
-                <div class="da-panel-header"> <span class="da-panel-title"> <i class="icol-grid"></i> รายการอาหาร ทั้งหมด </span> </div>
+                <div class="da-panel-header"> <span class="da-panel-title"> <i class="icol-grid"></i> แก้ไขรูปภาพ เมนู/ราคา</span> </div>
                 <div class="da-panel-toolbar">
                     <div class="btn-toolbar">
-                        <div class="btn-group"> <a class="btn" href="<?php echo ADDRESS_ADMIN_CONTROL ?>menu&action=add"><i class="icol-add"></i> เพิ่มข้อมูล</a> </div>
+                        <div class="btn-group"> <a class="btn" href="<?php echo ADDRESS_ADMIN_CONTROL ?>menu_image&action=add"><i class="icol-add"></i> เพิ่มข้อมูล</a> </div>
                     </div>
                 </div>
                 <div class="da-panel-content da-table-container">
-                    <table id="da-ex-datatable-sort" class="da-table" sort="6" order="asc" width="1000">
+                    <table id="da-ex-datatable-sort" class="da-table" sort="4" order="asc" width="1000">
                         <thead>
                             <tr>
                                 <th>รหัส</th>
-                    
-                                <th>ชื่อสินค้า</th>
-                                <th>หมวดหมู่</th>
-                                <th>ราคา</th>
+                                <th>รูปภาพ</th>
                                 <th>สถานะ</th>
                                 <th>แก้ไขล่าสุด</th>
                                 <th>ลำดับ</th>
@@ -341,27 +366,29 @@ if ($_GET['id'] != '' && $_GET['action'] == 'edit') {
                         </thead>
                         <tbody>
                             <?php
-                            $sql = "SELECT * FROM " . $menu->getTbl() . " ORDER BY sort ASC";
+                            $sql = "SELECT * FROM " . $menu_image->getTbl();
 
 
                             $query = $db->Query($sql);
 
-
+                            $_count = 0;
                             while ($row = $db->FetchArray($query)) {
                                 ?>
                                 <tr>
-                                    <td class="center" width=""><?php echo $row['id']; ?></td>
-                           
-                                    <td  width="" style="width: 15%;"><?php echo $row['name']; ?></td>
-                                    <td  width=""><?php echo $category->getDataDesc("category_name", "id =" . $row['category_id']) ?></td>
-                                    <td  width="" style=""><?php echo $row['price']; ?></td>
+                                    <td class="center" width="15"><?php echo $row['id']; ?></td>
+
+                                    <td class="center"  width=""><img src="<?php echo $menu_image->getDataDesc("image", "id = '" . $row['id'] . "'") == "" ? NO_IMAGE : ADDRESS_SLIDES . $menu_image->getDataDesc("image", "id = '" . $row['id'] . "'") ?>" style="max-height: 120px;" class="img-polaroid img-responsive"></td>
                                     <td class="center" width=""><i class="icol-<?php echo ($row['status'] == 'ใช้งาน') ? 'accept' : 'cross' ?>" title="<?php echo $row['status'] ?>"></i></td>
                                     <td class="center" width=""><?php echo $functions->ShowDateThTime($row['updated_at']) ?></td>
                                     <td class="center" width=""><?php echo $row['sort']; ?></td>
-                                    <td class="center"  width=""><a href="<?php echo ADDRESS_ADMIN_CONTROL ?>menu&action=edit&id=<?php echo $row['id'] ?>" class="btn btn-primary btn-small">แก้ไข / ดู</a> <a href="javascript:;" onclick="if (confirm('คุณต้องการลบข้อมูลนี้หรือใม่?') == true) {
-                                                        document.location.href = '<?php echo ADDRESS_ADMIN_CONTROL ?>menu&action=del&id=<?php echo $row['id'] ?>'
-                                                                }" class="btn btn-danger btn-small">ลบ</a></td>
+                                    <td class="center"  width=""><a href="<?php echo ADDRESS_ADMIN_CONTROL ?>menu_image&action=edit&id=<?php echo $row['id'] ?>&type=<?= $_GET['type'] ?>&position=<?= $_count ?>" class="btn btn-primary btn-small">แก้ไข / ดู</a> 
+                                        <a href="javascript:;" onclick="if (confirm('คุณต้องการลบข้อมูลนี้หรือใม่?') == true) {
+                                                            document.location.href = '<?php echo ADDRESS_ADMIN_CONTROL ?>menu_image&action=del&id=<?php echo $row['id'] ?>'
+                                                                    }" class="btn btn-danger btn-small">ลบ</a>
+
+                                    </td>
                                 </tr>
+                                <?php $_count = $_count + 1 ?>
                             <?php } ?>
                         </tbody>
                     </table>

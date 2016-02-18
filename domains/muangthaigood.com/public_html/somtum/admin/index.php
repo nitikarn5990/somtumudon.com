@@ -15,13 +15,12 @@ if ($_SESSION ['admin_id'] != "") {
 
 
 
-if($_SESSION['admin_id'] == 'demo'){
-	if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_GET['action'] == 'del'){
-			SetAlert('DEMO MODE ไม่สามารถกระทำรายการได้');
-			header('location:'.ADDRESS_ADMIN_CONTROL .'demo'); 
-			exit();
-	}
-	
+if ($_SESSION['admin_id'] == 'demo') {
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_GET['action'] == 'del') {
+        SetAlert('DEMO MODE ไม่สามารถกระทำรายการได้');
+        header('location:' . ADDRESS_ADMIN_CONTROL . 'demo');
+        exit();
+    }
 }
 ?>
 <html lang="en">
@@ -35,7 +34,7 @@ if($_SESSION['admin_id'] == 'demo'){
 
 
 
-     
+
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
         <!-- Bootstrap Stylesheet -->
@@ -244,7 +243,7 @@ if($_SESSION['admin_id'] == 'demo'){
                             </div>
                             <div id="da-header-button-container" >
                                 <ul>
-                                  
+
                                     <li class="da-header-button-wrap">
                                         <div class="da-header-button">
                                             <a href="javascript:void(0)"
@@ -277,95 +276,94 @@ if($_SESSION['admin_id'] == 'demo'){
                         <!-- Main Navigation -->
                         <div id="da-main-nav" class="btn-container">
                             <ul>
-                                <li class="<?= PAGE_CONTROLLERS == 'slides' || PAGE_CONTROLLERS == 'slides' ||  PAGE_CONTROLLERS == 'sub_images' ? 'active' : '' ?>"><a href="#"> <!-- Icon Container --> <span
+                                <li class="<?= PAGE_CONTROLLERS == 'slides' || PAGE_CONTROLLERS == 'slides' || PAGE_CONTROLLERS == 'sub_images' ? 'active' : '' ?>"><a href="#"> <!-- Icon Container --> <span
                                             class="da-nav-icon"> <img src="../images/icon-home.png"
                                                                   width="32" height="32">
                                         </span> หน้าแรก
                                     </a>
                                     <ul>
                                         <li class="hidden <?= PAGE_CONTROLLERS == 'slides' ? 'active' : '' ?>"><a href="<?php echo ADDRESS_ADMIN_CONTROL ?>slides">แก้ไขภาพ</a></li>
-                                      
+
                                         <li class=" <?= PAGE_CONTROLLERS == 'sub_images' ? 'active' : '' ?>"><a href="<?php echo ADDRESS_ADMIN_CONTROL ?>sub_images&type=index">แก้ไขภาพ</a></li>
                                         <li class="hidden <?= PAGE_CONTROLLERS == 'home' ? 'active' : '' ?>"><a  href="<?php echo ADDRESS_ADMIN_CONTROL ?>home&action=edit&id=1">รายละเอียด</a></li>
-                    
+
 
                                     </ul>
                                 </li>
-                             
-                                   <li class="<?= PAGE_CONTROLLERS == 'location' || $_GET['type'] == 'location'  ? 'active' : '' ?>"><a href="#"> <!-- Icon Container --> 
-                                 <span
+
+                                <li class="<?= PAGE_CONTROLLERS == 'branch' || PAGE_CONTROLLERS == 'location' ? 'active' : '' ?>"><a href="#"> <!-- Icon Container --> 
+                                        <span
                                             class="da-nav-icon"> <img src="../images/icon-location.png"
                                                                   width="32" height="32">
                                         </span>    สาขา/ที่ตั้ง
                                     </a>
                                     <ul>
-                                    <li class="<?= PAGE_CONTROLLERS == 'head_image'  && $_GET['type'] == 'location' ? 'active' : '' ?>"><a  href="<?php echo ADDRESS_ADMIN_CONTROL ?>head_image&type=location&action=edit">Head Image</a></li>
-                                    
-                                             <li class="<?= PAGE_CONTROLLERS == 'location' ? 'active' : '' ?>"><a  href="<?php echo ADDRESS_ADMIN_CONTROL ?>location&action=edit&id=1">รายละเอียด</a></li>
-                                           <li class="<?= PAGE_CONTROLLERS == 'branch' ? 'active' : '' ?>"><a href="<?php echo ADDRESS_ADMIN_CONTROL ?>branch">สาขา</a></li>
+                                        <li class="hidden <?= PAGE_CONTROLLERS == 'branch' || PAGE_CONTROLLERS == 'location' ? 'active' : '' ?>"><a  href="<?php echo ADDRESS_ADMIN_CONTROL ?>head_image&type=location&action=edit">Head Image</a></li>
+
+                                        <li class="<?= PAGE_CONTROLLERS == 'location' ? 'active' : '' ?>"><a  href="<?php echo ADDRESS_ADMIN_CONTROL ?>location&action=edit&id=1">รายละเอียด</a></li>
+                                        <li class="<?= PAGE_CONTROLLERS == 'branch' ? 'active' : '' ?>"><a href="<?php echo ADDRESS_ADMIN_CONTROL ?>branch">สาขา</a></li>
 
                                     </ul>
                                 </li>
-                                
-                                    <li class="<?= PAGE_CONTROLLERS == 'chart-project' || $_GET['type'] == 'chart-project' ? 'active' : '' ?>"><a href="#"> <!-- Icon Container --> 
-                                 <span
-                                            class="da-nav-icon"> <img src="../images/icon-draft.png"
+                                <li class="<?= PAGE_CONTROLLERS == 'menu' || PAGE_CONTROLLERS == 'menu_image' ? 'active' : '' ?>"><a href="#"> <!-- Icon Container --> 
+                                        <span
+                                            class="da-nav-icon"> <img src="../images/icon-menuset.png"
                                                                   width="32" height="32">
-                                        </span>    ผังโครงการ
-                                    </a> 
-                                    <ul>
-                                       <li class="<?= PAGE_CONTROLLERS == 'head_image' && $_GET['type'] == 'chart-project' ? 'active'   : '' ?>"><a  href="<?php echo ADDRESS_ADMIN_CONTROL ?>head_image&type=chart-project&action=edit">Head Image</a></li>
-                                     <li class="<?= PAGE_CONTROLLERS == 'sub_images' && $_GET['type'] == 'chart-project' ? 'active' : '' ?>"><a  href="<?php echo ADDRESS_ADMIN_CONTROL ?>sub_images&type=chart-project">ภาพข้อความ</a></li>
-                                             <li class="<?= PAGE_CONTROLLERS == 'chart-project' ? 'active' : '' ?>"><a  href="<?php echo ADDRESS_ADMIN_CONTROL ?>chart-project&action=edit&id=1">รายละเอียด</a></li>
-
-                                    </ul> 
-                                </li>
-                               
-                                     <li class="<?= PAGE_CONTROLLERS == 'model' || PAGE_CONTROLLERS == 'modelhome' || $_GET['type'] == 'model' ? 'active' : '' ?>"><a href="#"> <!-- Icon Container --> <span
-                                            class="da-nav-icon"> <img src="../images/icon-plan.png" 
-                                                                  width="32" height="32">
-                                        </span> แบบบ้าน
+                                        </span>    เมนู/ราคา
                                     </a>
                                     <ul>
-                                          <li class="<?= PAGE_CONTROLLERS == 'head_image' && $_GET['type'] == 'model' ? 'active' : '' ?>"><a  href="<?php echo ADDRESS_ADMIN_CONTROL ?>head_image&type=model&action=edit">Head Image</a></li>
-                                     <li class="<?= PAGE_CONTROLLERS == 'sub_images'  && $_GET['type'] == 'model' ? 'active' : '' ?>"><a  href="<?php echo ADDRESS_ADMIN_CONTROL ?>sub_images&type=model">ภาพข้อความ</a></li>
-                                         <li class="<?= PAGE_CONTROLLERS == 'model' ? 'active' : '' ?>"><a href="<?php echo ADDRESS_ADMIN_CONTROL ?>model&action=edit&id=1">รายละเอียด</a></li>
-                                         <li class="<?= PAGE_CONTROLLERS == 'modelhome' ? 'active' : '' ?>"><a href="<?php echo ADDRESS_ADMIN_CONTROL ?>modelhome">แบบบ้าน</a></li>
-     
-                            
+                                        <li class=" <?= PAGE_CONTROLLERS == 'menu_image' ? 'active' : '' ?>"><a  href="<?php echo ADDRESS_ADMIN_CONTROL ?>menu_image">รูปภาพ</a></li>
 
+
+                                        <li class="<?= PAGE_CONTROLLERS == 'menu' ? 'active' : '' ?>"><a href="<?php echo ADDRESS_ADMIN_CONTROL ?>menu"> เมนู/ราคา</a></li>
+
+                                    </ul>
+                                </li>
+                                <li class="<?= PAGE_CONTROLLERS == 'service' || (PAGE_CONTROLLERS == 'menu_image_block' && $_GET['number_block'] == '1') || (PAGE_CONTROLLERS == 'menu_image_block' && $_GET['number_block'] == '2') || (PAGE_CONTROLLERS == 'menu_image_block' && $_GET['number_block'] == '3') || PAGE_CONTROLLERS == 'menu_image_block' && $_GET['number_block'] == '4'
+                                        ? 'active' : '' ?>"><a href="#"> <!-- Icon Container --> 
+                                        <span
+                                            class="da-nav-icon"> <img src="../images/icon-service.png"
+                                                                  width="32" height="32">
+                                        </span>    ครัว/บริการ
+                                    </a>
+                                    <ul>
+                                        <li class=" <?= PAGE_CONTROLLERS == 'menu_image_block' && $_GET['number_block'] == '1' ? 'active' : '' ?>"><a  href="<?php echo ADDRESS_ADMIN_CONTROL ?>menu_image_block&number_block=1">รูปภาพ Block 1</a></li>
+                                        <li class=" <?= PAGE_CONTROLLERS == 'menu_image_block' && $_GET['number_block'] == '2' ? 'active' : '' ?>"><a  href="<?php echo ADDRESS_ADMIN_CONTROL ?>menu_image_block&number_block=2">รูปภาพ Block 2</a></li>
+                                        <li class=" <?= PAGE_CONTROLLERS == 'menu_image_block' && $_GET['number_block'] == '3' ? 'active' : '' ?>"><a  href="<?php echo ADDRESS_ADMIN_CONTROL ?>menu_image_block&number_block=3">รูปภาพ Block 3</a></li>
+                                        <li class=" <?= PAGE_CONTROLLERS == 'menu_image_block' && $_GET['number_block'] == '4' ? 'active' : '' ?>"><a  href="<?php echo ADDRESS_ADMIN_CONTROL ?>menu_image_block&number_block=4">รูปภาพ Block 4</a></li>
+                                        <li class="<?= PAGE_CONTROLLERS == 'service' ? 'active' : '' ?>"><a  href="<?php echo ADDRESS_ADMIN_CONTROL ?>service&action=edit&id=1">รายละเอียด</a></li>
                                     </ul>
                                 </li>
                            
-                                <li class="<?= PAGE_CONTROLLERS == 'contact' || PAGE_CONTROLLERS == 'contact_message'
-								|| $_GET['type'] == 'contact'
-								 ? 'active' : '' ?>"><a href="#"> <!-- Icon Container --> <span
+
+                                <li class="<?=
+PAGE_CONTROLLERS == 'contact' || PAGE_CONTROLLERS == 'contact_message' || $_GET['type'] == 'contact' ? 'active' : ''
+?>"><a href="#"> <!-- Icon Container --> <span
                                             class="da-nav-icon"> <img src="../images/icon-contact.png"
                                                                   width="32" height="32">
                                         </span> ติดต่อเรา
                                     </a>
                                     <ul>
-                                    	         <li class="<?= PAGE_CONTROLLERS == 'head_image' && $_GET['type'] == 'contact' ? 'active' : '' ?>"><a  href="<?php echo ADDRESS_ADMIN_CONTROL ?>head_image&type=contact&action=edit">Head Image</a></li>
-                                     <li class="<?= PAGE_CONTROLLERS == 'sub_images' && $_GET['type'] == 'contact' ? 'active' : '' ?>"><a  href="<?php echo ADDRESS_ADMIN_CONTROL ?>sub_images&type=contact">ภาพข้อความ</a></li>
+                                 
                                         <li class="<?= PAGE_CONTROLLERS == 'contact' ? 'active' : '' ?>"><a
                                                 href="<?php echo ADDRESS_ADMIN_CONTROL ?>contact&action=edit&id=1">รายละเอียด</a></li>
                                         <li class="<?= PAGE_CONTROLLERS == 'contact_message' ? 'active' : '' ?>"><a
                                                 href="<?php echo ADDRESS_ADMIN_CONTROL ?>contact_message">ข้อความ</a></li>
                                     </ul>
                                 </li>
-                                
-                                    <li class="<?= PAGE_CONTROLLERS == 'footer' 
-								|| $_GET['type'] == 'contact'
-								 ? 'active' : '' ?>"><a href="#"> <!-- Icon Container --> <span
+
+                                <li class="<?=
+PAGE_CONTROLLERS == 'footer' || $_GET['type'] == 'contact' ? 'active' : ''
+?>"><a href="#"> <!-- Icon Container --> <span
                                             class="da-nav-icon"> <img src="../images/icon-contact.png"
                                                                   width="32" height="32">
                                         </span> FOOTER
                                     </a>
                                     <ul>
-                            
+
                                         <li class="<?= PAGE_CONTROLLERS == 'footer' ? 'active' : '' ?>"><a
                                                 href="<?php echo ADDRESS_ADMIN_CONTROL ?>footer&action=edit&id=1">รายละเอียด</a></li>
-                                   
+
                                     </ul>
                                 </li>
 
@@ -483,7 +481,7 @@ if($_SESSION['admin_id'] == 'demo'){
     }
     .hidden{
         display: none !important;
-            
+
     }
     .active{
         background-color: #CCC;

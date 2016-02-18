@@ -1,57 +1,28 @@
-<div class="clearfix"></div>
 
-<div id="slide">
+<div id="menu" class="text-center-xs">
+    <ul style="list-style-type: none;" class="padding-all-0-xs">
+        <li><a href="<?=ADDRESS?>location<?=$url_get?>" title="<?= $_GET['lang'] == 'en' ? 'Branch / Location' : 'สาขา / ที่ตั้ง' ?>">
+                <img src="<?= ADDRESS ?>img/<?= $sub_images->getDataDesc("image", "name='สาขา/ที่ตั้ง'") ?>"  class="menutop img-responsive margin-auto-xs" />
+                <div class="" style="margin-bottom: 15px;"></div>
+                <p><?= $_GET['lang'] == 'en' ? 'Branch / Location' : 'สาขา / ที่ตั้ง' ?><p></a>
+        </li>
+        <li><a href="<?=ADDRESS?>menu<?=$url_get?>" title="<?= $_GET['lang'] == 'en' ? 'Menu / Price' : 'เมนู / ราคา' ?>">
+                <img src="<?= ADDRESS ?>img/<?= $sub_images->getDataDesc("image", "name='เมนู/ราคา'") ?>" class="img-responsive margin-auto-xs"/>
+                <div class="" style="margin-bottom: 15px;"></div>
+                <p><?= $_GET['lang'] == 'en' ? 'Menu / Price' : 'เมนู / ราคา' ?></p>
+            </a>
+        </li>
+        <li><a href="<?=ADDRESS?>service<?=$url_get?>" title="<?= $_GET['lang'] == 'en' ? 'Kitchen / service' : 'ครัว / บริการ' ?>">
+                <img src="<?= ADDRESS ?>img/<?= $sub_images->getDataDesc("image", "name='ครัว/บริการ'") ?>"  class="menutop img-responsive margin-auto-xs" />
+                <div class="" style="margin-bottom: 15px;"></div>
+                <p><?= $_GET['lang'] == 'en' ? 'Kitchen / service' : 'ครัว / บริการ' ?></p></a>
+        </li>
+        <li><a href="<?=ADDRESS?>clients<?=$url_get?>" title="<?= $_GET['lang'] == 'en' ? ' Customer / Feedback' : 'ลูกค้า / คำติชม' ?>">
 
-    <article class="demo_block">
-        <ul id="demo1" style="list-style:none; position:0; margin:0; width:100%;">
-            <?php
-            $sql1 = "SELECT * FROM " . $slides->getTbl() . " WHERE status = 'ใช้งาน' ORDER BY sort ASC";
-            $query1 = $db->Query($sql1);
-            $numRow1 = $db->NumRows($query1);
-            if ($numRow1 > 0) {
-                while ($row1 = $db->FetchArray($query1)) {
-                    ?>
-                    <li><a href="#slide1"><img class="img-responsive margin-auto-xs" src="<?= ADDRESS ?>img/<?= $slides_file->getDataDescLastID('file_name', 'slides_id = ' . $row1['id']) ?>" /></a></li>
-
-                    <?php
-                }
-            }
-            ?>
-
-        </ul>
-    </article>
-
+                <img src="<?= ADDRESS ?>img/<?= $sub_images->getDataDesc("image", "name='ลูกค้า/คำติชม'") ?>"  class="menutop img-responsive margin-auto-xs" />
+                <div class="" style="margin-bottom: 15px;"></div>
+                <p><?= $_GET['lang'] == 'en' ? ' Customer / Feedback' : 'ลูกค้า / คำติชม' ?></p></a>
+        </li>
+    </ul>
 </div>
-<div class="clearfix"></div>
-
-<div id="bottomslide">
-
-    <div class="sizebottomslide">
-        <p class="hidden-lg hidden-md">&nbsp;</p>
-        <div class="boxleft">
-            <img class="img-responsive margin-auto-xs" src="<?= ADDRESS ?>img/<?= $sub_images->getDataDesc('image', 'name = "index" AND position = "L"') ?>" />
-        </div>
-        <p class="hidden-lg hidden-md">&nbsp;</p>
-        <div class="boxrigthfty">
-            <img class="img-responsive margin-auto-xs" src="<?= ADDRESS ?>img/<?= $sub_images->getDataDesc('image', 'name = "index" AND position = "R"') ?>" />
-        </div>
-        <p class="hidden-lg hidden-md">&nbsp;</p>
-        <div class="clear"></div>
-    </div>
-</div>
-<div id="content">
-
-    <h1><strong><?= $home->getDataDescLastID('home_title', 'id = 1') ?></strong></h1>
-    <div class="model_detail2">
-        <p>
-            <?php
-            //   $product_Detail = $products->getDataDesc("product_detail", "product_name_ref = '" . $_GET['productID'] . "'");
-            $model_detail = str_replace("../files", "../../files", $home->getDataDescLastID('home_detail', 'id = 1'));
-
-            $html = preg_replace('/(width|height)="\d*"\s/', "", $model_detail);
-
-            echo $html;
-            ?>
-        </p>
-    </div>
-</div>
+<p>&nbsp;</p>

@@ -19,7 +19,7 @@ if ($_POST['submit_bt'] == 'บันทึกข้อมูล' || $_POST['sub
     }
 
 
-    $arrData = array();
+    $arrData = array(); 
 
 
     $arrData = $functions->replaceQuote($_POST);
@@ -27,29 +27,29 @@ if ($_POST['submit_bt'] == 'บันทึกข้อมูล' || $_POST['sub
 
 
 
-    $location->SetValues($arrData);
+    $service->SetValues($arrData);
 
 
 
-    if ($location->GetPrimary() == '') {
+    if ($service->GetPrimary() == '') {
 
 
-        $location->SetValue('created_at', DATE_TIME);
+        $service->SetValue('created_at', DATE_TIME);
 
 
-        $location->SetValue('updated_at', DATE_TIME);
+        $service->SetValue('updated_at', DATE_TIME);
     } else {
 
 
-        $location->SetValue('updated_at', DATE_TIME);
+        $service->SetValue('updated_at', DATE_TIME);
     }
 
 
 
-    //	$location->Save();
+    //	$service->Save();
 
 
-    if ($location->Save()) {
+    if ($service->Save()) {
 
 
         SetAlert('เพิ่ม แก้ไข ข้อมูลสำเร็จ', 'success');
@@ -58,132 +58,17 @@ if ($_POST['submit_bt'] == 'บันทึกข้อมูล' || $_POST['sub
         //Redirect if needed
 
 
-
-
-
-        if (isset($_FILES['file_array'])) {
-
-
-            $Allfile = "";
-
-
-            $Allfile_ref = "";
-
-
-            for ($i = 0; $i < count($_FILES['file_array']['tmp_name']); $i++) {
-
-
-                if ($_FILES["file_array"]["name"][$i] != "") {
-
-
-                    unset($arrData['webs_money_image']);
-
-
-
-
-
-                    $targetPath = DIR_ROOT_GALLERY . "/";
-
-
-
-
-
-                    $newImage = DATE_TIME_FILE . "_" . $_FILES['file_array']['name'][$i];
-
-
-
-
-
-                    $cdir = getcwd(); // Save the current directory
-
-
-
-
-
-                    chdir($targetPath);
-
-
-
-
-
-                    copy($_FILES['file_array']['tmp_name'][$i], $targetPath . $newImage);
-
-
-
-
-
-                    chdir($cdir); // Restore the old working directory   
-
-
-
-
-
-                    $location_files->SetValue('file_name', $newImage);
-
-
-
-
-
-                    if ($_POST['alt_tag'][$i] == '') {
-
-
-
-
-
-                        //$Allfile_ref .= "|_|" . $newImage;
-                        //$location_files->SetValue('file_name', substr($Allfile, 3));
-
-
-                        $location_files->SetValue('alt_tag', $newImage);
-                    } else {
-
-
-                        //$Allfile_ref .= "|_|" .   $functions->seoTitle($_POST['alt_tag'][$i]);
-
-
-                        $location_files->SetValue('alt_tag', $functions->seoTitle($_POST['alt_tag'][$i]));
-                    }
-
-
-                    $location_files->SetValue('location_id', $location->GetPrimary());
-
-
-                    //$location_files->Save();
-
-
-                    if ($location_files->Save()) {
-
-                        //SetAlert('เพิ่ม แก้ไข ข้อมูลสำเร็จ','success');
-
-
-                        $location_files->ResetValues();
-                    } else {
-
-
-                        SetAlert('ไม่สามารถเพิ่ม แก้ไข ข้อมูลได้ กรุณาลองใหม่อีกครั้ง');
-                    }
-                }
-            }
-        }
-
-
-        ////////
-
-
-
-
-
         if ($redirect) {
 
 
-            header('location:' . ADDRESS_ADMIN_CONTROL . 'location');
+            header('location:' . ADDRESS_ADMIN_CONTROL . 'service');
 
 
             die();
         } else {
 
 
-            header('location:' . ADDRESS_ADMIN_CONTROL . 'location&action=edit&id=' . $location->GetPrimary());
+            header('location:' . ADDRESS_ADMIN_CONTROL . 'service&action=edit&id=' . $service->GetPrimary());
 
 
             die();
@@ -248,7 +133,7 @@ if ($_GET['id'] != '' && $_GET['action'] == 'del') {
     $arrDel = array('id' => $_GET['id']);
 
 
-    $location->SetValues($arrDel);
+    $service->SetValues($arrDel);
 
 
 
@@ -257,7 +142,7 @@ if ($_GET['id'] != '' && $_GET['action'] == 'del') {
     // Remove the info from the DB
 
 
-    if ($location->Delete()) {
+    if ($service->Delete()) {
 
 
         // Set alert and redirect
@@ -287,19 +172,19 @@ if ($_GET['id'] != '' && $_GET['action'] == 'edit') {
     // For Update
 
 
-    $location->SetPrimary((int) $_GET['id']);
+    $service->SetPrimary((int) $_GET['id']);
 
 
     // Try to get the information
 
 
-    if (!$location->GetInfo()) {
+    if (!$service->GetInfo()) {
 
 
         SetAlert('ไม่สามารถค้นหาข้อมูลได้ กรุณาลองใหม่อีกครั้ง');
 
 
-        $location->ResetValues();
+        $service->ResetValues();
     }
 }
 
@@ -331,7 +216,7 @@ if ($_GET['location_files_id'] != '') {
         SetAlert('Delete Data Success', 'success');
 
 
-        header('location:' . ADDRESS_ADMIN_CONTROL . 'location');
+        header('location:' . ADDRESS_ADMIN_CONTROL . 'service');
 
         die();
     } else {
@@ -352,32 +237,32 @@ if ($_GET['location_files_id'] != '') {
             Alert(GetAlert('success'), 'success');
             ?>
             <div class="da-panel collapsible">
-                <div class="da-panel-header"> <span class="da-panel-title"> <i class="icol-<?php echo ($location->GetPrimary() != '') ? 'application-edit' : 'add' ?>"></i> <?php echo ($location->GetPrimary() != '') ? 'แก้ไข' : 'แก้ไข' ?> รายละเอียด สาขา/ที่ตั้ง </span> </div>
+                <div class="da-panel-header"> <span class="da-panel-title"> <i class="icol-<?php echo ($service->GetPrimary() != '') ? 'application-edit' : 'add' ?>"></i> <?php echo ($service->GetPrimary() != '') ? 'แก้ไข' : 'แก้ไข' ?> รายละเอียด สาขา/ที่ตั้ง </span> </div>
                 <div class="da-panel-content da-form-container">
-                    <form id="validate" enctype="multipart/form-data" action="<?php echo ADDRESS_ADMIN_CONTROL ?>location<?php echo ($location->GetPrimary() != '') ? '&id=' . $location->GetPrimary() : ''; ?>" method="post" class="da-form">
-                        <?php if ($location->GetPrimary() != ''): ?>
-                            <input type="hidden" name="id" value="<?php echo $location->GetPrimary() ?>" />
-                            <input type="hidden" name="created_at" value="<?php echo $location->GetValue('created_at') ?>" />
+                    <form id="validate" enctype="multipart/form-data" action="<?php echo ADDRESS_ADMIN_CONTROL ?>service<?php echo ($service->GetPrimary() != '') ? '&id=' . $service->GetPrimary() : ''; ?>" method="post" class="da-form">
+                        <?php if ($service->GetPrimary() != ''): ?>
+                            <input type="hidden" name="id" value="<?php echo $service->GetPrimary() ?>" />
+                            <input type="hidden" name="created_at" value="<?php echo $service->GetValue('created_at') ?>" />
                         <?php endif; ?>
                         <div class="da-form-inline">
 
                             <div class="da-form-row">
                                 <label class="da-form-label">รายละเอียด (Thai)<span class="required">*</span></label>
                                 <div class="da-form-item large">
-                                    <textarea name="location_detail" id="location_detail" class="span12 tinymce required"><?php echo ($location->GetPrimary() != '') ? $location->GetValue('location_detail') : ''; ?></textarea>
-                                    <label for="location_detail" generated="true" class="error" style="display:none;"></label>
+                                    <textarea name="service_detail" id="service_detail" class="span12 tinymce required"><?php echo ($service->GetPrimary() != '') ? $service->GetValue('service_detail') : ''; ?></textarea>
+                                    <label for="service_detail" generated="true" class="error" style="display:none;"></label>
                                 </div>
                             </div>
 
 
                         </div>
-                            <div class="da-form-inline">
+                            <div class="da-form-inline"> 
 
                             <div class="da-form-row">
                                 <label class="da-form-label">รายละเอียด (English)<span class="required">*</span></label>
                                 <div class="da-form-item large">
-                                    <textarea name="location_detail_eng" id="location_detail_eng" class="span12 tinymce required"><?php echo ($location->GetPrimary() != '') ? $location->GetValue('location_detail_eng') : ''; ?></textarea>
-                                    <label for="location_detail_eng" generated="true" class="error" style="display:none;"></label>
+                                    <textarea name="service_detail_eng" id="service_detail_eng" class="span12 tinymce required"><?php echo ($service->GetPrimary() != '') ? $service->GetValue('service_detail_eng') : ''; ?></textarea>
+                                    <label for="service_detail_eng" generated="true" class="error" style="display:none;"></label>
                                 </div>
                             </div>
 

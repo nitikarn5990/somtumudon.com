@@ -18,15 +18,6 @@ if ($_POST['submit_bt'] == 'บันทึกข้อมูล' || $_POST['sub
 
 
 
-
-    if ($arrData['ref'] != "") {
-
-        $arrData['category_name_ref'] = $functions->seoTitle($arrData['ref']);
-    } else {
-
-        $arrData['category_name_ref'] = $functions->seoTitle($arrData['category_name']);
-    }
-
     // Get all the Form Data
 
     $category->SetValues($arrData);
@@ -40,8 +31,7 @@ if ($_POST['submit_bt'] == 'บันทึกข้อมูล' || $_POST['sub
 
         $category->SetValue('updated_at', DATE_TIME);
     }
-    $files_cat = $_POST['files_cat'];
-    $category->SetValue('files', $files_cat);
+
 
 
     //$category->Save();
@@ -50,89 +40,7 @@ if ($_POST['submit_bt'] == 'บันทึกข้อมูล' || $_POST['sub
 
         SetAlert('เพิ่ม แก้ไข ข้อมูลสำเร็จ', 'success');
 
-        //Redirect if needed
-          if (isset($_FILES['file_array'])) {
-
-
-            $Allfile = "";
-
-
-            $Allfile_ref = "";
-
-
-            for ($i = 0; $i < count($_FILES['file_array']['tmp_name']); $i++) {
-
-
-                if ($_FILES["file_array"]["name"][$i] != "") {
-
-
-                    unset($arrData['webs_money_image']);
-
-                    $targetPath = DIR_ROOT_IMAGES . "/";
-
-
-
-                    $ext = explode('.', $_FILES['file_array']['name'][$i]);
-                    $extension = $ext[count($ext) - 1];
-                    $rand = mt_rand(1, 100000);
-
-                    $newImage = DATE_TIME_FILE . $rand . "." . $extension;
-
-               //     $newImage = DATE_TIME_FILE . "_" . $_FILES['file_array']['name'][$i];
-
-                    $cdir = getcwd(); // Save the current directory
-
-
-                    chdir($targetPath);
-
-                    copy($_FILES['file_array']['tmp_name'][$i], $targetPath . $newImage);
-
-                    chdir($cdir); // Restore the old working directory   
-
-                    $category->SetValue('files', $newImage);
-
-             
-
-
-               //     $category->SetValue('product_id', $products->GetPrimary());
-
-
-                    //$category->Save();
-
-
-                    if ($category->Save()) {
-
-                        //SetAlert('เพิ่ม แก้ไข ข้อมูลสำเร็จ','success');
-
-
-                        $category->ResetValues();
-                    } else {
-
-
-                        SetAlert('ไม่สามารถเพิ่ม แก้ไข ข้อมูลได้ กรุณาลองใหม่อีกครั้ง');
-                    }
-                }
-            }
-
-
-            if ($_POST['products_file_name_cover'] == '78456') {
-
-
-                $arrOrder = array(
-                    'products_file_name_cover' => $category->getDataDesc("file_name", "product_id = '" . $products->GetPrimary() . "' ORDER BY id ASC LIMIT 0,1"),
-                    'updated_at' => DATE_TIME
-                );
-
-
-                $arrOrderID = array('id' => $products->GetPrimary());
-
-
-
-
-
-                $products->updateSQL($arrOrder, $arrOrderID);
-            }
-        }
+    
 
         if ($redirect) {
 
@@ -213,7 +121,7 @@ if ($_GET['id'] != '' && $_GET['action'] == 'edit') {
     <?php if ($category->GetPrimary() != ''): ?>
                             <input type="hidden" name="id" value="<?php echo $category->GetPrimary() ?>" />
                             <input type="hidden" name="created_at" value="<?php echo $category->GetValue('created_at') ?>" />
-                             <input type="hidden" name="files_cat" value="<?=$category->getDataDesc("files", "id = " . $category->GetPrimary())?>"/>
+   
                             
            <?php endif; ?>
                         <div class="da-form-inline">
@@ -223,50 +131,7 @@ if ($_GET['id'] != '' && $_GET['action'] == 'edit') {
                                     <input type="text" name="category_name" id="category" value="<?php echo ($category->GetPrimary() != '') ? $category->GetValue('category_name') : ''; ?>" class="span12 required" />
                                 </div>
                             </div>
-                            <div class="da-form-row">
-                                <label class="da-form-label">ชื่อใช้อ้างอิง / URL</label>
-                                <div class="da-form-item large">
-                                    <input type="text" name="ref" id="ref" value="<?php echo ($category->GetPrimary() != '') ? $category->GetValue('category_name_ref') : ''; ?>" class="span12" />
-                                    <label class="help-block">ว่างไว้ถ้าต้องการให้สร้างชื่ออ้างอิงอัตโนมัติ</label>
-                                </div>
-                            </div>
-
-                            <div class="da-form-row">
-                                <label class="da-form-label">รายละเอียดหมวดหมู่<span class="required">*</span></label>
-                                <div class="da-form-item large">
-                                    <textarea name="category_detail" id="category_detail" class="span12 tinymce required"><?php echo ($category->GetPrimary() != '') ? $category->GetValue('category_detail') : ''; ?></textarea>
-                                    <label for="category_detail" generated="true" class="error" style="display:none;"></label>
-                                </div>
-                            </div>
-                                <div class="da-form-row">
-                                    <label class="da-form-label">ไฟล์ที่อัพโหลด</label>
-                                    <div class="da-form-item large">
-                                        <ul style=" list-style-type: none;" class="da-form-list">
-                                            <ul>
-                                                <li> 
-                                                    <span class="">
-    <?php if ($category->GetPrimary() != '' && $category->getDataDesc("files", "id = " . $category->GetPrimary())  != '') { ?>
-                                                            <img src="<?php echo ADDRESS . 'images/' . $category->getDataDesc("files", "id = " . $category->GetPrimary()) ?>"  style="max-width: 100%;" class="img-thumbnail"> 
-    <?php } ?>
-                                                    </span> 
-                                                </li>
-                                            </ul>
-                                    </div>
-                                </div>
-                                <div class="da-form-row">
-                                    <label class="da-form-label">อัพโหลดภาพหมวดหมู่</label>
-                                    <div class="da-form-item large" id="filecopy"> 
-                                       
-                                        <input type="file" name="file_array[]" id="image"  class="span4"/>
-
-                                    </div>
-                                </div>
-                            <div class="da-form-row">
-                                <label class="da-form-label">ลำดับ <span class="required">*</span></label>
-                                <div class="da-form-item large">
-                                    <input type="number" name="sort" id="sort" value="<?php echo ($category->GetPrimary() != '') ? $category->GetValue('sort') : ''; ?>" class="span12 required" />
-                                </div>
-                            </div>
+                     
                             <div class="da-form-row">
                                 <label class="da-form-label">สถานะ <span class="required">*</span></label>
                                 <div class="da-form-item large">
@@ -322,7 +187,7 @@ if ($_GET['id'] != '' && $_GET['action'] == 'edit') {
                                 <th>รหัส</th>
                                 <th>หมวดหมู่</th>
                                 <th>สถานะ</th>
-                                <th>ลำดับ</th>
+                               
                                 <th>แก้ไขล่าสุด</th>
                                 <th>ตัวเลือก</th>
                             </tr>
@@ -339,7 +204,7 @@ if ($_GET['id'] != '' && $_GET['action'] == 'edit') {
                                     <td class="center"><?php echo $row['id']; ?></td>
                                     <td><?php echo $row['category_name']; ?></td>
                                     <td class="center"><i class="icol-<?php echo ($row['status'] == 'ใช้งาน') ? 'accept' : 'cross' ?>" title="<?php echo $row['status'] ?>"></i></td>
-                                    <td class="center"><?php echo $row['sort']; ?></td>
+                              
                                     <td class="center"><?php echo $functions->ShowDateThTime($row['updated_at']) ?></td>
                                     <td class="center"><a href="<?php echo ADDRESS_ADMIN_CONTROL ?>category&action=edit&id=<?php echo $row['id'] ?>" class="btn btn-primary btn-small">แก้ไข / ดู</a> <a href="#" onclick="if (confirm('คุณต้องการลบข้อมูลนี้หรือใม่?') == true) {
                                                 document.location.href = '<?php echo ADDRESS_ADMIN_CONTROL ?>category&action=del&id=<?php echo $row['id'] ?>'

@@ -124,9 +124,16 @@ if ($_GET['id'] != '' && $_GET['action'] == 'edit') {
                         <?php endif; ?>
                         <div class="da-form-inline">
                             <div class="da-form-row">
-                                <label class="da-form-label">ที่อยู่<span class="required">*</span></label>
+                                <label class="da-form-label">ที่อยู่ (Thai)<span class="required">*</span></label>
                                 <div class="da-form-item large">
                                     <input type="text" name="address" id="address" class="span12 required" value="<?php echo ($footer->GetPrimary() != '') ? $footer->GetValue('address') : ''; ?>" />
+
+                                </div>
+                            </div>
+                             <div class="da-form-row">
+                                <label class="da-form-label">ที่อยู่ (English)<span class="required">*</span></label>
+                                <div class="da-form-item large">
+                                    <input type="text" name="address_eng" id="address" class="span12 required" value="<?php echo ($footer->GetPrimary() != '') ? $footer->GetValue('address_eng') : ''; ?>" />
 
                                 </div>
                             </div>

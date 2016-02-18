@@ -151,7 +151,7 @@ define('ADDRESS_ADMIN', 'http://' . $_SERVER['SERVER_NAME'] . '/admin/');
 
 
 define('ADDRESS', 'http://' . $_SERVER['SERVER_NAME'] . '/');
-
+define('ADDRESS2', 'http://' . $_SERVER['SERVER_NAME']);
 
 
 define('ADDRESS_FILE', 'http://' . $_SERVER['SERVER_NAME'] . '/files/');

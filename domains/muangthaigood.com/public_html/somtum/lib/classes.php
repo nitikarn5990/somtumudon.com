@@ -365,6 +365,14 @@ class Menu extends DbTemplate {
     }
 
 }
+class Menu_image extends DbTemplate {
+
+    function __construct() {
+        // Call the parent constructor
+        parent::__construct('menu_image', DB_DEFAULT);
+    }
+
+}
 
 class Menu_head_image extends DbTemplate {
 
@@ -469,6 +477,22 @@ class Branch extends DbTemplate {
     function __construct() {
         // Call the parent constructor
         parent::__construct('branch', DB_DEFAULT);
+    }
+
+}
+class Service extends DbTemplate {
+
+    function __construct() {
+        // Call the parent constructor
+        parent::__construct('service', DB_DEFAULT);
+    }
+
+}
+class Menu_image_block extends DbTemplate {
+
+    function __construct() {
+        // Call the parent constructor
+        parent::__construct('menu_image_block', DB_DEFAULT);
     }
 
 }

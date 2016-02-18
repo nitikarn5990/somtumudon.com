@@ -23,7 +23,7 @@ $functions = new Utility;
 
 
 // New Class For Table
-//$category = new Category; 
+$category = new Category; 
 $users = new Users;
 
 //$gallery_categories = new Gallery_Categories;
@@ -73,7 +73,8 @@ $sub_images = new Sub_images;
 //$portfolio = new portfolio;
 //$portfolio_head_image = new Portfolio_head_image;
 //$portfolio_head_txt = new Portfolio_head_txt;
-// $menu = new Menu;
+ $menu = new Menu;
+ $menu_image = new Menu_image;
 //$menu_head_image = new Menu_head_image;
 //  $menu_head_txt = new Menu_head_txt;
 //  $menuset = new Menuset;
@@ -92,4 +93,9 @@ $modelhome = new Modelhome;
 /*New Somtumudon.com*/
 $footer = new Footer;
 $branch = new Branch;
+$service = new Service;
+$menu_image_block = new Menu_image_block;
+
+
+
 ?>

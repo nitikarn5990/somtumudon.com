@@ -55,6 +55,7 @@ if ($_POST ["submit_bt"] == 'Send') {
 
             </p>
         </div>
+        <p>&nbsp;</p>
         <div class="col-xs-12 col-md-6 pull-left">
             <div class="">
                 <?= $contact->getDataDesc('google_map', 'id = 1') ?>

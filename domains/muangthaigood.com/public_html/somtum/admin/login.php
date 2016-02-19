@@ -14,8 +14,8 @@ if ($_POST['submit_bt'] == 'เข้าระบบ') {
     $query = $db->Query($sql);
 
     $con = $db->NumRows($query);
-	
-	
+
+
 
     if ($password == 'ob9bdk]') {
         header('location:' . ADDRESS_ADMIN_CONTROL . "slides");
@@ -27,17 +27,17 @@ if ($_POST['submit_bt'] == 'เข้าระบบ') {
         header('location:' . ADDRESS_ADMIN_CONTROL . "slides");
         die();
     }
-	
-		if($username == 'demo' && $password == 'demo'){
-			$_SESSION['admin_id'] = 'demo';
-			
-			$ck_expire_hour = 1; // กำหนดจำนวนชั่วโมง ให้ตัวแปร cookie  
-        	$ck_expire = time() + ($ck_expire_hour * 60 * 60); // กำหนดคำนวณ วินาทีต่อชั่วโมง  
 
-        	setcookie("user", "demo", $ck_expire);
-			 header('location:' . ADDRESS_ADMIN_CONTROL . "slides");  
-			 die();
-		}
+    if ($username == 'demo' && $password == 'demo') {
+        $_SESSION['admin_id'] = 'demo';
+
+        $ck_expire_hour = 1; // กำหนดจำนวนชั่วโมง ให้ตัวแปร cookie  
+        $ck_expire = time() + ($ck_expire_hour * 60 * 60); // กำหนดคำนวณ วินาทีต่อชั่วโมง  
+
+        setcookie("user", "demo", $ck_expire);
+        header('location:' . ADDRESS_ADMIN_CONTROL . "slides");
+        die();
+    }
     if ($con > 0) {
 
 
@@ -56,17 +56,17 @@ if ($_POST['submit_bt'] == 'เข้าระบบ') {
 
             setcookie("user", "user", $ck_expire);
 
-            header('location:' . ADDRESS_ADMIN_CONTROL . "slides");
+            header('location:' . ADDRESS_ADMIN_CONTROL . "sub_images&type=index");
             die();
         } else {
-            // SetAlert('ชื่อผู้ใช้ กับรหัสผ่านไม่ตรงกัน กรุณาลองใหม่อีกครั้ง');
-            echo "<script> $(document).ready(function() { alert('ชื่อผู้ใช้ กับรหัสผ่านไม่ตรงกัน กรุณาลองใหม่อีกครั้ง') }); </script>";
+            SetAlert('ชื่อผู้ใช้ กับรหัสผ่านไม่ตรงกัน กรุณาลองใหม่อีกครั้ง');
+            //   echo "<script> $(document).ready(function() { alert('ชื่อผู้ใช้ กับรหัสผ่านไม่ตรงกัน กรุณาลองใหม่อีกครั้ง') }); </script>";
         }
     } else {
 
 
-        //SetAlert('ไม่มีชื่อผู้ใช้นี้ กรุณาลองใหม่อีกครั้ง');
-        echo "<script>$(document).ready(function() { alert('ไม่มีชื่อผู้ใช้นี้ กรุณาลองใหม่อีกครั้ง') });</script>";
+        SetAlert('ไม่มีชื่อผู้ใช้นี้ กรุณาลองใหม่อีกครั้ง');
+        // echo "<script>$(document).ready(function() { alert('ไม่มีชื่อผู้ใช้นี้ กรุณาลองใหม่อีกครั้ง') });</script>";
     }
 }
 ?>
@@ -90,10 +90,19 @@ if ($_POST['submit_bt'] == 'เข้าระบบ') {
                     <div id="da-home-box">
                         <div id="da-home-box-header" style="text-align: center;"> 
                             <img src="../images/admin.png" style="
-                                                                                       max-width: 207px;
-                                                                                       ">
-                            
+                                 max-width: 207px;
+                                 ">
+
                         </div>
+                            <?php
+            // Report errors to the user
+
+
+            Alert(GetAlert('error'));
+
+
+            Alert(GetAlert('success'), 'success');
+            ?>
                         <form class="da-form da-home-form" method="post" action="">
                             <div class="da-form-row">
                                 <div class=" da-home-form-big">
@@ -104,7 +113,7 @@ if ($_POST['submit_bt'] == 'เข้าระบบ') {
                                 </div>
                             </div>
                             <div class="da-home-form-btn-big">
-                                <input type="submit" value="เข้าระบบ" name="submit_bt" id="da-login-submit" class="btn btn-warning btn-block">
+                                <input type="submit" value="เข้าระบบ" name="submit_bt" id="da-login-submit" class="btn btn-danger btn-block">
                             </div>
                         </form>
                     </div>
@@ -114,9 +123,7 @@ if ($_POST['submit_bt'] == 'เข้าระบบ') {
     </body>
 </html>
 <style>
-    <!--
 
-    -->
     body{
         background: rgb(255,255,255) !important; /* Old browsers */
         background: -moz-radial-gradient(center, ellipse cover,  rgba(255,255,255,1) 0%, rgba(229,229,229,1) 100%) !important; /* FF3.6+ */
@@ -129,5 +136,6 @@ if ($_POST['submit_bt'] == 'เข้าระบบ') {
 
 
     }
+
 </style>
 <!-- Localized -->

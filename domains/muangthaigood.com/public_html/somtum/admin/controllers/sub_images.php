@@ -45,7 +45,7 @@ if ($_POST['submit_bt'] == 'บันทึกข้อมูล' || $_POST['sub
     if ($sub_images->Save()) {
 
 
-        //  SetAlert('เพิ่ม แก้ไข ข้อมูลสำเร็จ', 'success');
+        SetAlert('เพิ่ม แก้ไข ข้อมูลสำเร็จ', 'success');
 
         if (isset($_FILES['file_array'])) {
 
@@ -222,7 +222,15 @@ if ($_GET['id'] != '' && $_GET['action'] == 'edit') {
 	 ?>
     <div class="row-fluid">
         <div class="span12">
+                <?php
+            // Report errors to the user
 
+
+            Alert(GetAlert('error'));
+
+
+            Alert(GetAlert('success'), 'success');
+            ?>
             <div class="da-panel collapsible">
                 <div class="da-panel-header"> <span class="da-panel-title"> <i class="icol-<?php echo ($sub_images->GetPrimary() != '') ? 'application-edit' : 'add' ?>"></i> <?php echo ($sub_images->GetPrimary() != '') ? 'แก้ไข' : 'เพิ่ม' ?> ภาพหัวข้อหลัก <?=$txt_type?></span> </div>
                 <div class="da-panel-content da-form-container">
@@ -235,8 +243,6 @@ if ($_GET['id'] != '' && $_GET['action'] == 'edit') {
                        	<input type="hidden" name="position" value="<?php echo $sub_images->GetValue('position') ?>" />
                         <?php endif; ?>
                         <div class="da-form-inline">
-                         
-
                             <div class="da-form-row">
                                 <label class="da-form-label">ไฟล์ที่อัพโหลด</label>
                                 <div class="da-form-item large">
@@ -257,14 +263,11 @@ if ($_GET['id'] != '' && $_GET['action'] == 'edit') {
                                 <div class="da-form-item large" id="filecopy"> <span class="formNote"><strong>Alt tag</strong> </span>
                                     <input type="text" placeholder="" name="alt" value="<?php echo $sub_images->GetValue('alt') ?>" >
                                     <input type="file" name="file_array[]" id="image"  class="span4"/>
-
+                                    <p class="help-block"> ขนาดภาพที่แนะนำไม่เกิน <b>( 210px * 322px )</b></p>
                                     <label class="da-form-label"> <span class="required"></span></label>
 
                                 </div>
                             </div>
-                         
-                        
-
                         </div>
                         <div class="btn-row">
                             <input type="submit" name="submit_bt" value="บันทึกข้อมูล" class="btn btn-success" />
@@ -336,7 +339,7 @@ if ($_GET['id'] != '' && $_GET['action'] == 'edit') {
                                 <tr>
                                     <td class="center" width="15"><?php echo $row['id']; ?></td>
                        	    	     <td class="center" width=""><?php echo $row['name']; ?></td>
-                                     <td class="center"  width=""><img src="<?php echo $sub_images->getDataDesc("image", "id = '" . $row['id'] . "'") == "" ? NO_IMAGE : ADDRESS_SLIDES . $sub_images->getDataDesc("image", "id = '" . $row['id'] . "'") ?>" style="max-height: 120px;" class="img-polaroid img-responsive"></td>
+                                     <td class="center"  width=""><img src="<?php echo $sub_images->getDataDesc("image", "id = '" . $row['id'] . "'") == "" ? NO_IMAGE : ADDRESS_SLIDES . $sub_images->getDataDesc("image", "id = '" . $row['id'] . "'") ?>" style="max-width: 100px;" class="img-polaroid"></td>
           
                                     <td class="center" width=""><?php echo $functions->ShowDateThTime($row['updated_at']) ?></td>
                

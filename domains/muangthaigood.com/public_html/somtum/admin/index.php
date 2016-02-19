@@ -341,7 +341,7 @@ PAGE_CONTROLLERS == 'contact' || PAGE_CONTROLLERS == 'contact_message' || $_GET[
 ?>"><a href="#"> <!-- Icon Container --> <span
                                             class="da-nav-icon"> <img src="../images/icon-contact.png"
                                                                   width="32" height="32">
-                                        </span> ติดต่อเรา
+                                        </span> ลูกค้า / คำติชม
                                     </a>
                                     <ul>
                                  
@@ -355,7 +355,7 @@ PAGE_CONTROLLERS == 'contact' || PAGE_CONTROLLERS == 'contact_message' || $_GET[
                                 <li class="<?=
 PAGE_CONTROLLERS == 'footer' || $_GET['type'] == 'contact' ? 'active' : ''
 ?>"><a href="#"> <!-- Icon Container --> <span
-                                            class="da-nav-icon"> <img src="../images/icon-contact.png"
+                                            class="da-nav-icon"> <img src="../images/document-footer.png"
                                                                   width="32" height="32">
                                         </span> FOOTER
                                     </a>
@@ -411,6 +411,7 @@ PAGE_CONTROLLERS == 'footer' || $_GET['type'] == 'contact' ? 'active' : ''
                     </script>
                     <style>
                         /*Colored Label Attributes*/
+                      
                         .label {
                             background-color: #BFBFBF;
                             border-bottom-left-radius: 3px;

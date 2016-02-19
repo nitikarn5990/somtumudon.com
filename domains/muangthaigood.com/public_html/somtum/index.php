@@ -3,6 +3,11 @@ session_start();
 
 include_once($_SERVER["DOCUMENT_ROOT"] . '/lib/application.php');
 // echo ($_SERVER["DOCUMENT_ROOT"]);
+if ($_GET['lang'] == 'en') {
+    $strMeta = "Somtumudon";
+} else {
+    $strMeta = "ส้มตำอุดร";
+}
 ?>
 
 
@@ -10,9 +15,9 @@ include_once($_SERVER["DOCUMENT_ROOT"] . '/lib/application.php');
 <html lang="en">
     <head>   
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>ส้มตำอุดร</title>       
-        <meta name="description" content="ส้มตำอุดร" />   
-        <meta name="keywords" content="ส้มตำอุดร" />
+        <title><?=$strMeta?></title>       
+        <meta name="description" content="<?=$strMeta?>" />   
+        <meta name="keywords" content="<?=$strMeta?>" />
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="viewport" content="width=device-width"/> 
@@ -25,6 +30,16 @@ include_once($_SERVER["DOCUMENT_ROOT"] . '/lib/application.php');
 
     </head> 
     <body>
+        <?php
+        //  $url_get = trim($_SERVER['REQUEST_URI'], '/'); 
+
+        if ($_GET['lang'] == 'en') {
+            $url_get = '/?lang=en';
+        } else {
+            $url_get = '';
+        }
+        $url_get = trim($url_get, '/');
+        ?>
         <div class="container-fluid">
             <div style="max-width: 974px;margin: auto;">
                 <div class="row">
@@ -42,11 +57,13 @@ include_once($_SERVER["DOCUMENT_ROOT"] . '/lib/application.php');
                                 </div>
                                 <div id="navbar" class="navbar-collapse collapse">
                                     <ul class="nav navbar-nav" >
-                                        <li class="<?= PAGE_CONTROLLERS == '' || PAGE_CONTROLLERS == 'index' ? 'active' : '' ?>"><a href="<?= ADDRESS ?>" title="หน้าหลัก"><img src="<?= ADDRESS ?>images/icon-home.png" style="width: 20px;">&nbsp;&nbsp;สาขา / ที่ตั้ง</a></li>
-                                        <li class="<?= PAGE_CONTROLLERS == 'location' ? 'active' : '' ?>"><a href="<?= ADDRESS ?>location" title="ที่ตั้งโครงการ"><img src="<?= ADDRESS ?>images/icon-location.png" style="width: 20px;">&nbsp;&nbsp;เมนู / ราคา</a></li>
-                                        <li class="<?= PAGE_CONTROLLERS == 'chart-project' ? 'active' : '' ?>"><a href="<?= ADDRESS ?>chart-project" title="ผังโครงการ"><img src="<?= ADDRESS ?>images/icon-plan.png" style="width: 20px;">&nbsp;&nbsp;ผังโครงการ</a></li>
-                                        <li class="<?= PAGE_CONTROLLERS == 'model' ? 'active' : '' ?>"><a href="<?= ADDRESS ?>model" title="แบบบ้าน"><img src="<?= ADDRESS ?>images/icon-draft.png" style="width: 20px;">&nbsp;&nbsp;ครัว / บริการ</a></li>
-                                        <li class="<?= PAGE_CONTROLLERS == 'contact' ? 'active' : '' ?>"><a href="<?= ADDRESS ?>contact" title="ติดต่อเรา"><img src="<?= ADDRESS ?>images/icon-contact.png" style="width: 20px;">&nbsp;&nbsp;ลูกค้า / คำติชม</a></li>
+
+
+                                        <li class="<?= PAGE_CONTROLLERS == '' || PAGE_CONTROLLERS == 'index' ? 'active' : '' ?>"><a href="<?= ADDRESS . $url_get ?>"><img src="<?= ADDRESS ?>images/icon-home.png" style="width: 20px;">&nbsp;&nbsp;<?= $_GET['lang'] == 'en' ? 'Home' : 'หน้าหลัก' ?></a></li>
+                                        <li class="<?= PAGE_CONTROLLERS == 'location' ? 'active' : '' ?>"><a href="<?= ADDRESS ?>location<?= $url_get ?>"><img src="<?= ADDRESS ?>images/icon-location.png" style="width: 20px;">&nbsp;&nbsp;<?= $_GET['lang'] == 'en' ? 'Branch / Location' : 'สาขา / ที่ตั้ง' ?></a></li>
+                                        <li class="<?= PAGE_CONTROLLERS == 'menu' ? 'active' : '' ?>"><a href="<?= ADDRESS ?>menu<?= $url_get ?>"><img src="<?= ADDRESS ?>images/icon-menuset.png" style="width: 20px;">&nbsp;&nbsp;<?= $_GET['lang'] == 'en' ? 'Menu / Price' : 'เมนู / ราคา' ?></a></li>
+                                        <li class="<?= PAGE_CONTROLLERS == 'service' ? 'active' : '' ?>"><a href="<?= ADDRESS ?>service<?= $url_get ?>"><img src="<?= ADDRESS ?>images/icon-service.png" style="width: 20px;">&nbsp;&nbsp;<?= $_GET['lang'] == 'en' ? 'Kitchen / Service' : 'ครัว / บริการ' ?></a></li>
+                                        <li class="<?= PAGE_CONTROLLERS == 'clients' ? 'active' : '' ?>"><a href="<?= ADDRESS ?>clients<?= $url_get ?>"><img src="<?= ADDRESS ?>images/icon-contact.png" style="width: 20px;">&nbsp;<?= $_GET['lang'] == 'en' ? ' Customer / Feedback' : 'ลูกค้า / คำติชม' ?></a></li>
                                     </ul>
 
                                 </div><!--/.nav-collapse -->
@@ -56,21 +73,12 @@ include_once($_SERVER["DOCUMENT_ROOT"] . '/lib/application.php');
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
-                        <?php
-                        //  $url_get = trim($_SERVER['REQUEST_URI'], '/'); 
 
-                        if ($_GET['lang'] == 'en') {
-                            $url_get = '/?lang=en';
-                        } else {
-                            $url_get = '';
-                        }
-                        $url_get = trim($url_get, '/');
-                        ?>
                         <div id="eng" class="hidden-sm hidden-xs"><span><a href="<?= ADDRESS . PAGE_CONTROLLERS ?>" class="<?= $_GET['lang'] == '' ? 'color_red' : 'color_white' ?>">THAI</a></span> / <a href="<?= ADDRESS . PAGE_CONTROLLERS ?>?lang=en" class="<?= $_GET['lang'] == 'en' ? 'color_red' : 'color_white' ?>">ENG</a></div>
                         <div id="logo" class="hidden-sm hidden-xs"><a href=""><img src="<?= ADDRESS ?>images/<?= $_GET['lang'] == 'en' ? 'logo-eng.png' : 'logo.png' ?>" class="img-responsive" style="margin: auto;"/></a></div>
 
                         <div id="mobileNav" class="hidden-lg hidden-md">
-                            <div id="eng" class="hidden-lg hidden-md pull-right padding-all-10-xs "><span><a href="<?= ADDRESS ?>" class="<?= $_GET['lang'] == '' ? 'color_red' : 'color_white' ?>">THAI</a></span> / <a href="<?= ADDRESS ?>?lang=en" class="<?= $_GET['lang'] == 'en' ? 'color_red' : 'color_white' ?>">ENG</a></div>
+                            <div id="eng" class="hidden-lg hidden-md pull-right padding-all-10-xs "><span><a href="<?= ADDRESS . PAGE_CONTROLLERS ?>" class="<?= $_GET['lang'] == '' ? 'color_red' : 'color_white' ?>">THAI</a></span> / <a href="<?= ADDRESS . PAGE_CONTROLLERS ?>?lang=en" class="<?= $_GET['lang'] == 'en' ? 'color_red' : 'color_white' ?>">ENG</a></div>
                             <br class="hidden-lg hidden-md"/>
                             <div id="logo" class="padding-all-10-xs hidden-lg hidden-md"><a href=""><img src="<?= ADDRESS ?>images/<?= $_GET['lang'] == 'en' ? 'logo-eng.png' : 'logo.png' ?>" class="img-responsive" style="margin: auto;"/></a></div>
                             <div class="hidden-lg hidden-md" style="margin-bottom: 30px;"></div>
@@ -157,6 +165,12 @@ include_once($_SERVER["DOCUMENT_ROOT"] . '/lib/application.php');
 
 
         <style>
+            div#content img{
+                width: 100%;
+            }
+            #mycapt, #changeCpt{
+                width: inherit !important;
+            }
             .menu_bottom-responsive{
                 border-bottom: 1px dashed #606060;
                 border-top: 1px dashed #606060;
@@ -636,59 +650,47 @@ include_once($_SERVER["DOCUMENT_ROOT"] . '/lib/application.php');
                     margin: 0;
                 }
                 /*--------------------------  img pop-up ----------------------*/
-                
+
                 div.pop-up {
                     display: none;
                     position: absolute;
                     width: 400px;
                     padding: 0;
                     /*margin: -350px 0 0 0;*/
-                    margin: -314px 0 0 -173px;
+                    margin: <?= $_GET['lang'] == 'en' ? '-523px' : '-314px' ?> 0 0 -173px;
                     background: #eeeeee;
                     color: #000000;
                     border: 1px dashed #7f7f7f;
+                    z-index: 999;
+
                 }
-                div#pop-up {
+                div.pop-up-location {
                     display: none;
                     position: absolute;
                     width: 400px;
                     padding: 0;
                     /*margin: -350px 0 0 0;*/
-                    margin: -314px 0 0 -173px;
+                    margin: -303px 0 0 -173px;
                     background: #eeeeee;
                     color: #000000;
                     border: 1px dashed #7f7f7f;
+                    z-index: 999;
+
                 }
-                div#pop-up1 {
+                div.pop-up-menu {
                     display: none;
                     position: absolute;
                     width: 400px;
                     padding: 0;
-                   margin: -314px 0 0 -173px;
+                    /*margin: -350px 0 0 0;*/
+                    margin: -79px 0 0 -173px;
                     background: #eeeeee;
                     color: #000000;
                     border: 1px dashed #7f7f7f;
+                    z-index: 999;
+
                 }
-                div#pop-up2 {
-                    display: none;
-                    position: absolute;
-                    width: 400px;
-                    padding: 0;
-                  margin: -314px 0 0 -173px;
-                    background: #eeeeee;
-                    color: #000000;
-                    border: 1px dashed #7f7f7f;
-                }
-                div#pop-up3 {
-                    display: none;
-                    position: absolute;
-                    width: 400px;
-                    padding: 0;
-                  margin: -314px 0 0 -173px;
-                    background: #eeeeee;
-                    color: #000000;
-                    border: 1px dashed #7f7f7f;
-                }
+
                 /*--------------------------  eng img pop-up ----------------------*/
 
                 .padding-top-10-xs {

@@ -42,8 +42,8 @@ $contact_message = new Contact_message;
 //$contact_footer = new Contact_footer;
 //$contact_map = new Contact_map;
 
-$slides = new Slides;
-$slides_file = new Slide_files;
+//$slides = new Slides;
+//$slides_file = new Slide_files;
 
 //$ads = new Ads;
 //$ads_files = new Ads_files;
@@ -83,11 +83,11 @@ $sub_images = new Sub_images;
 
 
 $location = new Location;
-$chart_project = new Chart_project;
-$head_image = new Head_image;
+//$chart_project = new Chart_project;
+//$head_image = new Head_image;
 
-$model = new Model;
-$modelhome = new Modelhome;
+//$model = new Model;
+//$modelhome = new Modelhome;
 
 
 /*New Somtumudon.com*/

@@ -312,7 +312,7 @@ if ($_SESSION['admin_id'] == 'demo') {
                                         </span>    เมนู/ราคา
                                     </a>
                                     <ul>
-                                        <li class=" <?= PAGE_CONTROLLERS == 'menu_image' ? 'active' : '' ?>"><a  href="<?php echo ADDRESS_ADMIN_CONTROL ?>menu_image">รูปภาพ</a></li>
+                                        <li class="hidden <?= PAGE_CONTROLLERS == 'menu_image' ? 'active' : '' ?>"><a  href="<?php echo ADDRESS_ADMIN_CONTROL ?>menu_image">รูปภาพ</a></li>
 
 
                                         <li class="<?= PAGE_CONTROLLERS == 'menu' ? 'active' : '' ?>"><a href="<?php echo ADDRESS_ADMIN_CONTROL ?>menu"> เมนู/ราคา</a></li>

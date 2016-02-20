@@ -79,7 +79,7 @@ if ($_POST ["submit_bt"] == 'Send') {
                         </span></p>
                     <p>SUBJECT<br />
                         <span>
-                            <input class="form-control" name="txt_subject" type="text" required="required" value="<?= $chk == 0 ? $_POST['txt_tel'] : '' ?>"/>
+                            <input class="form-control" name="txt_subject" type="text" required="required" value="<?= $chk == 0 ? $_POST['txt_subject'] : '' ?>"/>
                         </span></p>
                     <p>YOUR MESSAGE<br />
                         <span>

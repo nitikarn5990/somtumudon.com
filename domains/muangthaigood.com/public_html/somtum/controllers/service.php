@@ -140,7 +140,7 @@
 
             <?php
             //   $product_Detail = $products->getDataDesc("product_detail", "product_name_ref = '" . $_GET['productID'] . "'");
-            $model_detail = str_replace("../files", "../../files", $_GET['lang'] == 'en' ? $service->getDataDesc('service_detail_eng') : $service->getDataDesc('service_detail'));
+            $model_detail = str_replace("../files", "../../files", $_GET['lang'] == 'en' ? $service->getDataDesc('service_detail_eng', 'id = 1') : $service->getDataDesc('service_detail', 'id = 1'));
 
             $html = preg_replace('/(width|height)="\d*"\s/', "", $model_detail);
 

@@ -4,7 +4,7 @@
             <ul style="list-style-type: none;padding: 0;">
                 <li class="hidden-sm hidden-xs"> 
                     <?php
-                    $sql_image = "SELECT * FROM " . $menu_image->getTbl() . " WHERE status = 'ใช้งาน'";
+                    $sql_image = "SELECT * FROM " . $menu->getTbl() . " WHERE status = 'ใช้งาน' ORDER BY category_id ASC";
                     $query_image = $db->Query($sql_image);
                     $numRow_image = $db->NumRows($query_image);
                     $xx = 0;
@@ -38,7 +38,7 @@
                     if ($numRow1 > 0) {
                         while ($row1 = $db->FetchArray($query1)) {
                             ?>
-                            <p><?= $_GET['lang'] == 'en' ? $row1['name_eng'] : $row1['name'] ?> : <span>150<?= $_GET['lang'] == 'en' ? ' Bath' : ' บาท' ?></span></p>
+                            <p ><?= $_GET['lang'] == 'en' ? $row1['name_eng'] : $row1['name'] ?> : <span><?= $row1['price'] ?> <?= $_GET['lang'] == 'en' ? ' Bath' : ' บาท' ?></span></p>
                         <?php } ?>
                     <?php } ?>
                 </li>
@@ -52,7 +52,7 @@
                     if ($numRow1 > 0) {
                         while ($row1 = $db->FetchArray($query1)) {
                             ?>
-                            <p><?= $_GET['lang'] == 'en' ? $row1['name_eng'] : $row1['name'] ?> : <span>150<?= $_GET['lang'] == 'en' ? ' Bath' : ' บาท' ?></span></p>
+                            <p ><?= $_GET['lang'] == 'en' ? $row1['name_eng'] : $row1['name'] ?> : <span><?= $row1['price'] ?> <?= $_GET['lang'] == 'en' ? ' Bath' : ' บาท' ?></span></p>
                         <?php } ?>
                     <?php } ?>
 
@@ -67,7 +67,7 @@
                     if ($numRow1 > 0) {
                         while ($row1 = $db->FetchArray($query1)) {
                             ?>
-                            <p ><?= $_GET['lang'] == 'en' ? $row1['name_eng'] : $row1['name'] ?> : <span>150<?= $_GET['lang'] == 'en' ? ' Bath' : ' บาท' ?></span></p>
+                            <p ><?= $_GET['lang'] == 'en' ? $row1['name_eng'] : $row1['name'] ?> : <span><?= $row1['price'] ?> <?= $_GET['lang'] == 'en' ? ' Bath' : ' บาท' ?></span></p>
                         <?php } ?>
                     <?php } ?>
                 </li>
@@ -78,7 +78,7 @@
 <p class="hidden-lg hidden-md">&nbsp;</p>
 <div class="row hidden-lg hidden-md">
     <?php
-    $sql_image = "SELECT * FROM " . $menu_image->getTbl() . " WHERE status = 'ใช้งาน'";
+    $sql_image = "SELECT * FROM " . $menu->getTbl() . " WHERE status = 'ใช้งาน' ORDER BY category_id ASC";
     $query_image = $db->Query($sql_image);
     $numRow_image = $db->NumRows($query_image);
     $xx = 0;
@@ -105,8 +105,25 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-body">
-                                <img src="<?= ADDRESS ?>img/<?= $row_image['image'] ?>" class="img-responsive"><br/>
-                                <?= $_GET['lang'] == 'en' ? $row_image['detail_eng'] : $row_image['detail'] ?>
+                                <p class=""><img src="<?= ADDRESS ?>img/<?= $row_image['image'] ?>" class="img-responsive"></p>
+
+                                <?php
+                                $ProductName = $_GET['lang'] == 'en' ? $row_image['name_eng'] : $row_image['name'];
+                                $CategoryName = $_GET['lang'] == 'en' ? $row_image['name_eng'] : $row_image['name'];
+                                $CurrencyName = $_GET['lang'] == 'en' ? ' Bath.' : ' บาท.';
+                                if ($row_image['category_id'] == 1) {
+                                    echo "<p>" . $CatName = $_GET['lang'] == 'en' ? 'Papaya Salad' : 'ส้มตำ' . "</p>";
+                                    echo "<p>" . $ProductName . " : " . $row_image['price'] . $CurrencyName . "</p>";
+                                }
+                                if ($row_image['category_id'] == 2) {
+                                    echo "<p>" . $CatName = $_GET['lang'] == 'en' ? 'Chicken / Spicy / Grilled / Salad' : 'ไก่ ลาบ ย่าง ยำ' . "</p>";
+                                    echo "<p>" . $ProductName . " : " . $row_image['price'] . $CurrencyName . "</p>";
+                                }
+                                if ($row_image['category_id'] == 3) {
+                                    echo "<p>" . $CatName = $_GET['lang'] == 'en' ? 'Beverage' : 'เครื่องดื่ม' . "</p>";
+                                    echo "<p>" . $ProductName . " : " . $row_image['price'] . $CurrencyName . "</p>";
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
@@ -128,7 +145,7 @@
 </script>
 <span class="hidden-sm hidden-xs">
     <?php
-    $sql2 = "SELECT * FROM " . $menu_image->getTbl() . " WHERE  status = 'ใช้งาน'";
+    $sql2 = "SELECT * FROM " . $menu->getTbl() . " WHERE  status = 'ใช้งาน' ORDER BY category_id ASC";
     $query2 = $db->Query($sql2);
     $numRow2 = $db->NumRows($query2);
     $xx2 = 0;
@@ -136,8 +153,25 @@
         while ($row2 = $db->FetchArray($query2)) {
             ?>
             <div id="pop-up<?= $xx2 == 0 ? '' : $xx2 ?>" class="pop-up-menu" style="padding: 10px;">
-                <img src="<?= ADDRESS ?>img/<?= $row2['image'] ?>" class="img-responsive" /> 
-                <?= $_GET['lang'] == 'en' ? $row2['detail_eng'] : $row2['detail'] ?>
+                <p><img src="<?= ADDRESS ?>img/<?= $row2['image'] ?>" class="img-responsive" /> </p>
+
+                <?php
+                $ProductName = $_GET['lang'] == 'en' ? $row2['name_eng'] : $row2['name'];
+                $CategoryName = $_GET['lang'] == 'en' ? $row2['name_eng'] : $row2['name'];
+                $CurrencyName = $_GET['lang'] == 'en' ? ' Bath.' : ' บาท.';
+                if ($row2['category_id'] == 1) {
+                    echo "<p>" . $CatName = $_GET['lang'] == 'en' ? 'Papaya Salad' : 'ส้มตำ' . "</p>";
+                    echo "<p>" . $ProductName . " : " . $row2['price'] . $CurrencyName . "</p>";
+                }
+                if ($row2['category_id'] == 2) {
+                    echo "<p>" . $CatName = $_GET['lang'] == 'en' ? 'Chicken / Spicy / Grilled / Salad' : 'ไก่ ลาบ ย่าง ยำ' . "</p>";
+                    echo "<p>" . $ProductName . " : " . $row2['price'] . $CurrencyName . "</p>";
+                }
+                if ($row2['category_id'] == 3) {
+                    echo "<p>" . $CatName = $_GET['lang'] == 'en' ? 'Beverage' : 'เครื่องดื่ม' . "</p>";
+                    echo "<p>" . $ProductName . " : " . $row2['price'] . $CurrencyName . "</p>";
+                }
+                ?>
             </div>
 
             <?php
@@ -148,7 +182,7 @@
 </span>
 
 <?php
-$sql2 = "SELECT * FROM " . $menu_image->getTbl() . " WHERE  status = 'ใช้งาน'";
+$sql2 = "SELECT * FROM " . $menu->getTbl() . " WHERE  status = 'ใช้งาน' ORDER BY category_id ASC";
 $query2 = $db->Query($sql2);
 $numRow2 = $db->NumRows($query2);
 $xx2 = 0;

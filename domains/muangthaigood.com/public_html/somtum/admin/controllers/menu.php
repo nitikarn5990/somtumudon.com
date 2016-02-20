@@ -240,7 +240,7 @@ if ($_GET['id'] != '' && $_GET['action'] == 'edit') {
 
                             
 
-                            <div class="da-form-row hidden">
+                            <div class="da-form-row ">
                                 <label class="da-form-label">ไฟล์ที่อัพโหลด</label>
                                 <div class="da-form-item large">
                                     <ul style=" list-style-type: none;" class="da-form-list">
@@ -255,7 +255,7 @@ if ($_GET['id'] != '' && $_GET['action'] == 'edit') {
                                         </ul>
                                 </div>
                             </div>
-                            <div class="da-form-row hidden">
+                            <div class="da-form-row ">
                                 <label class="da-form-label">อัพโหลดไฟล์ <span class="required">*</span></label>
                                 <div class="da-form-item large" id="filecopy"> <span class="formNote"><strong>Alt tag</strong> </span>
                                     <input type="text" placeholder="" name="alt" value="<?php echo $menu->GetValue('alt') ?>" >
@@ -329,7 +329,7 @@ if ($_GET['id'] != '' && $_GET['action'] == 'edit') {
                         <thead>
                             <tr>
                                 <th>รหัส</th>
-                    
+                                 <th>รูปภาพ</th>
                                 <th>ชื่อสินค้า</th>
                                 <th>หมวดหมู่</th>
                                 <th>ราคา</th>
@@ -351,7 +351,7 @@ if ($_GET['id'] != '' && $_GET['action'] == 'edit') {
                                 ?>
                                 <tr>
                                     <td class="center" width=""><?php echo $row['id']; ?></td>
-                           
+                                    <td  width="" style="width: 15%;"><img src="<?=ADDRESS?>img/<?php echo $row['image']; ?>" class="img-responsive img-polaroid"></td>
                                     <td  width="" style="width: 15%;"><?php echo $row['name']; ?></td>
                                     <td  width=""><?php echo $category->getDataDesc("category_name", "id =" . $row['category_id']) ?></td>
                                     <td  width="" style=""><?php echo $row['price']; ?></td>
